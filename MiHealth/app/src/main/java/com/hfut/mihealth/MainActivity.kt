@@ -4,44 +4,58 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material3.BottomAppBar
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.hfut.mihealth.ui.theme.MiHealthTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            MiHealthTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
-            }
+            Text("Hello world!")
         }
     }
 }
 
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    MiHealthTheme {
-        Greeting("Android")
+fun MainScreen() {
+    Scaffold(
+        bottomBar = {
+            NavigationDemo()
+        }
+    ) {
+        // Main content of the screen
+        Text("Hello world!", modifier = Modifier.padding(it))
     }
 }
+
+@Composable
+@Preview
+fun NavigationDemo() {
+    val items = listOf("Item 1", "Item 2", "Item 3")
+    BottomAppBar {
+        IconButton(onClick = { /* Handle home click */ }) {
+            Icon(Icons.Default.Home, contentDescription = "Home")
+            IconButton(onClick = { /* Handle favorite click */ }) {
+                Icon(Icons.Default.Favorite, contentDescription = "Favorite")
+            }
+            IconButton(onClick = { /* Handle profile click */ }) {
+                Icon(Icons.Default.Person, contentDescription = "Profile")
+            }
+        }
+    }
+}
+
+
