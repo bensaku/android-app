@@ -9,13 +9,13 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
-import androidx.compose.material3.BottomAppBar
+import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 
@@ -45,15 +45,18 @@ fun MainScreen() {
 @Preview
 fun NavigationDemo() {
     val items = listOf("Item 1", "Item 2", "Item 3")
-    BottomAppBar {
+    NavigationBar {
         IconButton(onClick = { /* Handle home click */ }) {
             Icon(Icons.Default.Home, contentDescription = "Home")
-            IconButton(onClick = { /* Handle favorite click */ }) {
-                Icon(Icons.Default.Favorite, contentDescription = "Favorite")
-            }
-            IconButton(onClick = { /* Handle profile click */ }) {
-                Icon(Icons.Default.Person, contentDescription = "Profile")
-            }
+        }
+        Button(onClick = { /*TODO*/ }) {
+            Text("拍照")
+        }
+        IconButton(onClick = { /* Handle favorite click */ }) {
+            Icon(Icons.Default.Favorite, contentDescription = "Favorite")
+        }
+        IconButton(onClick = { /* Handle profile click */ }) {
+            Icon(Icons.Default.Person, contentDescription = "Profile")
         }
     }
 }
