@@ -7,20 +7,21 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Person
-import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
-import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -60,20 +61,18 @@ fun AppContent(item: String) {
 
 @Composable
 fun BottomNavigationBar() {
+    var items = listOf("home","favorite","profile")
+    var selectedItem by remember { mutableIntStateOf(0) }
     NavigationBar (
-        //modifier =
+        modifier = Modifier.fillMaxWidth(1f)
     ){
-        IconButton(onClick = { /* Handle home click */ }) {
-            Icon(Icons.Default.Home, contentDescription = "Home")
-        }
-        Button(onClick = { /*TODO*/ }) {
-            Text("拍照")
-        }
-        IconButton(onClick = { /* Handle favorite click */ }) {
-            Icon(Icons.Default.Favorite, contentDescription = "Favorite")
-        }
-        IconButton(onClick = { /* Handle profile click */ }) {
-            Icon(Icons.Default.Person, contentDescription = "Profile")
+        items.forEachIndexed { index, s ->
+            NavigationBarItem(
+                icon = { Icon(Icons.Filled.Favorite, contentDescription = null) },
+                label = { Text(s) },
+                selected = selectedItem == index,
+                onClick = { selectedItem = index }
+            )
         }
     }
 }
