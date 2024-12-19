@@ -1,9 +1,12 @@
 package com.hfut.mihealth
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
@@ -14,8 +17,11 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 
@@ -29,23 +35,34 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
+@Preview
 @Composable
 fun MainScreen() {
+    val items = SnackbarHostState()
     Scaffold(
         bottomBar = {
-            NavigationDemo()
+            BottomNavigationBar()
         }
     ) {
-        // Main content of the screen
-        Text("Hello world!", modifier = Modifier.padding(it))
+        AppContent("Hello world!")
     }
 }
 
 @Composable
-@Preview
-fun NavigationDemo() {
-    val items = listOf("Item 1", "Item 2", "Item 3")
-    NavigationBar {
+fun AppContent(item: String) {
+    Box(modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center) {
+        Text(item)
+    }
+}
+
+
+@Composable
+fun BottomNavigationBar() {
+    NavigationBar (
+        //modifier =
+    ){
         IconButton(onClick = { /* Handle home click */ }) {
             Icon(Icons.Default.Home, contentDescription = "Home")
         }
