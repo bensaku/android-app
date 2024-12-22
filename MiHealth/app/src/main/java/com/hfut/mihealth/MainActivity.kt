@@ -24,7 +24,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 
 class MainActivity : ComponentActivity() {
     @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -40,30 +47,30 @@ class MainActivity : ComponentActivity() {
 @Preview
 @Composable
 fun MainScreen() {
-    val items = listOf("主页","拍照","我的")
-    var selectedItem by remember { mutableIntStateOf(0) }
+    val navItems = listOf(
+        BottomItemDate("HomePage","主页",R.drawable.homepage_icon),
+        BottomItemDate("jilu","记录",R.drawable.jilu_icon),
+        BottomItemDate("mine","我的",R.drawable.mine_icon)
+    )
+    val navPos = rememberNavController()
     Scaffold(
         bottomBar = {
-            NavigationBar (
-                modifier = Modifier.fillMaxWidth(1f)
-            ){
-                items.forEachIndexed { index, s ->
-                    NavigationBarItem(
-                        icon = { Icon(Icons.Filled.Favorite, contentDescription = null) },
-                        label = { Text(s) },
-                        selected = selectedItem == index,
-                        onClick = { selectedItem = index }
-                    )
-                }
-            }
+            BottomNavigationBar(navItems,navPos)
         }
     ) {
-        paddingValues ->
-        println(paddingValues)
-        if (selectedItem == 0) {
-            Text("首页")
-        }else{
-            Text("设置")
+        innerPadding ->
+        print(innerPadding)
+
+        NavHost(navController = navPos , startDestination = "HomePage") {
+            composable("HomePage") {
+                AppContent("主页")
+            }
+            composable("jilu") {
+                AppContent("记录")
+            }
+            composable("mine") {
+                AppContent("我的")
+            }
         }
     }
 }
@@ -78,21 +85,33 @@ fun AppContent(item: String) {
 
 
 @Composable
-fun BottomNavigationBar() {
-    var items = listOf("home","favorite","profile")
+fun BottomNavigationBar(items:List<BottomItemDate> ,navPos:NavHostController) {
     var selectedItem by remember { mutableIntStateOf(0) }
     NavigationBar (
         modifier = Modifier.fillMaxWidth(1f)
     ){
         items.forEachIndexed { index, s ->
             NavigationBarItem(
-                icon = { Icon(Icons.Filled.Favorite, contentDescription = null) },
-                label = { Text(s) },
+                icon = { Icon(ImageVector.vectorResource(s.icon), contentDescription = null) },
+                label = { Text(s.label) },
                 selected = selectedItem == index,
-                onClick = { selectedItem = index }
+                onClick = { selectedItem = index
+                    navPos.navigate(s.route) {
+                        //使用此方法,可以避免生成一个重复的路由堆栈
+                        popUpTo(navPos.graph.findStartDestination().id){
+                            saveState = true
+                        }
+                        //避免重复选择会创建一个新的页面副本
+                        launchSingleTop = true
+                        //当重新选择之前已选择项目恢复页面状态
+                        restoreState = true
+                    }
+                }
             )
         }
     }
 }
+
+data class BottomItemDate(val route:String ,val label:String ,val icon:Int)
 
 
