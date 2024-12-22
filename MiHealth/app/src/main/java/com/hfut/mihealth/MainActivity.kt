@@ -15,6 +15,7 @@ import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -26,26 +27,44 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 
 class MainActivity : ComponentActivity() {
+    @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            Text("Hello world!")
+            MainScreen()
         }
     }
 }
 
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Preview
 @Composable
 fun MainScreen() {
-    val items = SnackbarHostState()
+    val items = listOf("主页","拍照","我的")
+    var selectedItem by remember { mutableIntStateOf(0) }
     Scaffold(
         bottomBar = {
-            BottomNavigationBar()
+            NavigationBar (
+                modifier = Modifier.fillMaxWidth(1f)
+            ){
+                items.forEachIndexed { index, s ->
+                    NavigationBarItem(
+                        icon = { Icon(Icons.Filled.Favorite, contentDescription = null) },
+                        label = { Text(s) },
+                        selected = selectedItem == index,
+                        onClick = { selectedItem = index }
+                    )
+                }
+            }
         }
     ) {
-        AppContent("Hello world!")
+        paddingValues ->
+        println(paddingValues)
+        if (selectedItem == 0) {
+            Text("首页")
+        }else{
+            Text("设置")
+        }
     }
 }
 
