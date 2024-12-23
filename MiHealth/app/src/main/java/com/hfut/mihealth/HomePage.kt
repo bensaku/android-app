@@ -14,7 +14,10 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SearchBar
+import androidx.compose.material3.SearchBarColors
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -31,13 +34,38 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun HomePageScreen() {
     var items = listOf("1", "2", "3")
-    LazyColumn {
-        items(items) { item ->
-            FoodCard()
+    Column {
+        FoodSearchBar()
+        LazyColumn {
+            items(items) { item ->
+                FoodCard()
+            }
         }
+    }
+
+}
+
+//搜索框
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun FoodSearchBar() {
+    val isSearchBarExpanded = remember { mutableStateOf(false) }
+    SearchBar(inputField = {
+        Text(text = "search") },
+        expanded = isSearchBarExpanded.value,
+        onExpandedChange = {println("expanded")}
+    ) {
+
     }
 }
 
+//饮食记录模块
+@Composable
+fun RecordCard() {
+
+}
+
+//食物卡片模块
 @Preview
 @Composable
 fun FoodCard() {
@@ -60,9 +88,11 @@ fun FoodCard() {
                 contentDescription = "food picture",
                 modifier = if (!isExpanded) Modifier
                     .size(60.dp)
-                    .clip(CircleShape) else Modifier
+                    .clip(CircleShape)
+                    .animateContentSize() else Modifier
                     .size(100.dp)
                     .clip(RoundedCornerShape(5.dp))
+                    .animateContentSize()
             )
             Spacer(Modifier.padding(horizontal = 8.dp))
             Column {
