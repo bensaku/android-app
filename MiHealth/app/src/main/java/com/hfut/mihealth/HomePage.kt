@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
@@ -20,6 +21,7 @@ import androidx.compose.material3.SearchBar
 import androidx.compose.material3.SearchBarColors
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -31,11 +33,13 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
+@Preview
 @Composable
 fun HomePageScreen() {
     var items = listOf("1", "2", "3")
     Column {
         FoodSearchBar()
+        RecordCard()
         LazyColumn {
             items(items) { item ->
                 FoodCard()
@@ -49,9 +53,21 @@ fun HomePageScreen() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FoodSearchBar() {
+    var query by remember { mutableStateOf("") }
     val isSearchBarExpanded = remember { mutableStateOf(false) }
-    SearchBar(inputField = {
-        Text(text = "search") },
+    SearchBar(
+        modifier = Modifier.padding(8.dp),
+        inputField = {
+        TextField(
+            value = query,
+            onValueChange = { query = it },
+            label = { Text("搜索食物") },
+            modifier = Modifier
+                .padding(horizontal = 20.dp, vertical = 8.dp)
+                .fillMaxWidth()
+                .height(50.dp),
+        )
+                     },
         expanded = isSearchBarExpanded.value,
         onExpandedChange = {println("expanded")}
     ) {
@@ -62,11 +78,24 @@ fun FoodSearchBar() {
 //饮食记录模块
 @Composable
 fun RecordCard() {
+    var isExpanded by remember {
+        mutableStateOf(false)
+    }
+    Surface(
+        shape = MaterialTheme.shapes.medium,
+        tonalElevation = 5.dp,
+        modifier = Modifier
+            .padding(all = 8.dp)
+            .fillMaxWidth()
+            .height(200.dp)
+            .clickable { isExpanded = !isExpanded }
+    ) {
+        Text(text = "RecordCard")
+    }
 
 }
 
 //食物卡片模块
-@Preview
 @Composable
 fun FoodCard() {
     var isExpanded by remember {
