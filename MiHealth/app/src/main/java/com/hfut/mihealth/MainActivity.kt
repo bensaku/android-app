@@ -11,19 +11,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBars
-import androidx.compose.foundation.layout.systemBars
-import androidx.compose.foundation.layout.systemGestures
-import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.layout.windowInsetsTopHeight
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
@@ -59,7 +52,7 @@ class MainActivity : ComponentActivity() {
 fun MainScreen() {
     val navItems = listOf(
         BottomItemDate("HomePage","主页",R.drawable.homepage_icon),
-        BottomItemDate("jilu","记录",R.drawable.jilu_icon),
+        BottomItemDate("recode","记录",R.drawable.recode_icon),
         BottomItemDate("mine","我的",R.drawable.mine_icon)
     )
     val navPos = rememberNavController()
@@ -81,7 +74,7 @@ fun MainScreen() {
                 composable("HomePage") {
                     HomePageScreen()
                 }
-                composable("jilu") {
+                composable("recode") {
                     AppContent("记录")
                 }
                 composable("mine") {

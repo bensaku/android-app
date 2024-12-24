@@ -1,5 +1,6 @@
 package com.hfut.mihealth
 
+import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -29,6 +30,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.BlendMode.Companion.Color
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -101,13 +104,18 @@ fun FoodCard() {
     var isExpanded by remember {
         mutableStateOf(false)
     }
+    val surfaceColor by animateColorAsState(
+        targetValue = if (isExpanded) Color(0xFFCCCCCC) else MaterialTheme.colorScheme.surface,
+        label = ""
+    )
     Surface(
         shape = MaterialTheme.shapes.medium,
         tonalElevation = 5.dp,
         modifier = Modifier
             .padding(all = 8.dp)
             .fillMaxWidth()
-            .clickable { isExpanded = !isExpanded }
+            .clickable { isExpanded = !isExpanded },
+        color = surfaceColor
     ) {
         Row(
             modifier = Modifier.padding(all = 8.dp)
