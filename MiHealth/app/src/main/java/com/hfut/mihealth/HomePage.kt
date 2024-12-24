@@ -93,7 +93,17 @@ fun RecordCard() {
             .height(200.dp)
             .clickable { isExpanded = !isExpanded }
     ) {
-        Text(text = "RecordCard")
+        Column {
+            Row {
+                Text(text = "今日已经摄入")
+                Text(text = "贪睡蛋白脂肪。。。")
+            }
+            Row {
+                Text(text = "早餐午餐中餐")
+                
+            }
+        }
+        
     }
 
 }
