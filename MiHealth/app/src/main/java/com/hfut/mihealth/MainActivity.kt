@@ -53,6 +53,7 @@ fun MainScreen() {
     val navItems = listOf(
         BottomItemDate("HomePage","主页",R.drawable.homepage_icon),
         BottomItemDate("recode","记录",R.drawable.recode_icon),
+        BottomItemDate("camera","拍照",R.drawable.mine_icon),
         BottomItemDate("mine","我的",R.drawable.mine_icon)
     )
     val navPos = rememberNavController()
@@ -79,6 +80,9 @@ fun MainScreen() {
                 }
                 composable("mine") {
                     AppContent("我的")
+                }
+                composable("camera") {
+                    CameraPageScreen()
                 }
             }
         }

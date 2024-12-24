@@ -1,6 +1,8 @@
 [versions]
+accompanistPermissionsVersion = "0.28.0"
 agp = "8.5.2"
 androidxNavigationComposeVersion = "2.8.5"
+cameraCoreVersion = "1.4.1"
 kotlin = "1.9.0"
 coreKtx = "1.15.0"
 junit = "4.13.2"
@@ -9,8 +11,16 @@ espressoCore = "3.6.1"
 lifecycleRuntimeKtx = "2.8.7"
 activityCompose = "1.9.3"
 composeBom = "2024.12.01"
+accompanist_version = "0.31.2-alpha"
 
 [libraries]
+accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanist_version" }
+androidx-camera-camera2 = { module = "androidx.camera:camera-camera2", version.ref = "cameraCoreVersion" }
+androidx-camera-core = { module = "androidx.camera:camera-core", version.ref = "cameraCoreVersion" }
+androidx-camera-extensions = { module = "androidx.camera:camera-extensions", version.ref = "cameraCoreVersion" }
+androidx-camera-lifecycle = { module = "androidx.camera:camera-lifecycle", version.ref = "cameraCoreVersion" }
+androidx-camera-video = { module = "androidx.camera:camera-video", version.ref = "cameraCoreVersion" }
+androidx-camera-view = { module = "androidx.camera:camera-view", version.ref = "cameraCoreVersion" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-navigation-navigation-compose2 = { module = "androidx.navigation:navigation-compose", version.ref = "androidxNavigationComposeVersion" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
