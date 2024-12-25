@@ -4,9 +4,11 @@ import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -35,14 +37,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 
-@Preview
 @Composable
-fun HomePageScreen() {
-    var items = listOf("1", "2", "3")
+fun HomePageScreen(navPos: NavHostController) {
+    val items = listOf("1", "2", "3")
     Column {
         FoodSearchBar()
-        RecordCard()
+        RecordCard(navPos)
         LazyColumn {
             items(items) { item ->
                 FoodCard()
@@ -80,7 +82,7 @@ fun FoodSearchBar() {
 
 //饮食记录模块
 @Composable
-fun RecordCard() {
+fun RecordCard(navPos: NavHostController) {
     var isExpanded by remember {
         mutableStateOf(false)
     }
@@ -93,14 +95,73 @@ fun RecordCard() {
             .height(200.dp)
             .clickable { isExpanded = !isExpanded }
     ) {
-        Column {
-            Row {
-                Text(text = "今日已经摄入")
-                Text(text = "碳水蛋白脂肪。。。")
+        Column(
+            modifier = Modifier
+                .padding(all = 10.dp)
+                .fillMaxHeight()
+        ) {
+            Row(
+                modifier = Modifier
+                    .padding(all = 10.dp)
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text(
+                    text = "饮食记录",
+                    style = MaterialTheme.typography.titleLarge
+                    )
+                Text(
+                    text = "查看详情",
+                    modifier = Modifier
+                        .padding(start = 10.dp),
+                    )
             }
-            Row {
-                Text(text = "早餐午餐中餐")
-                
+            Row(
+                modifier = Modifier
+                    .padding(all = 10.dp)
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text(
+                    text = "今日已摄入。。。卡路里",
+                )
+                Text(
+                    text = "脂肪",
+                    modifier = Modifier
+                        .padding(start = 10.dp)
+                )
+                Text(
+                    text = "碳水",
+                    modifier = Modifier
+                        .padding(start = 10.dp)
+                )
+                Text(
+                    text = "蛋白质",
+                    modifier = Modifier
+                        .padding(start = 10.dp)
+                )
+            }
+            Row(
+                modifier = Modifier
+                    .padding(all = 10.dp)
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text(
+                    text = "早餐",
+                    modifier = Modifier
+                        .padding(start = 10.dp)
+                )
+                Text(
+                    text = "午餐",
+                    modifier = Modifier
+                        .padding(start = 10.dp)
+                )
+                Text(
+                    text = "晚餐",
+                    modifier = Modifier
+                        .padding(start = 10.dp)
+                )
             }
         }
         

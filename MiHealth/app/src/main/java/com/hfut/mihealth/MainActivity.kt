@@ -73,7 +73,7 @@ fun MainScreen() {
         Box(modifier = Modifier.padding(innerPadding)) {
             NavHost(navController = navPos , startDestination = "HomePage") {
                 composable("HomePage") {
-                    HomePageScreen()
+                    HomePageScreen(navPos)
                 }
                 composable("recode") {
                     AppContent("记录")
