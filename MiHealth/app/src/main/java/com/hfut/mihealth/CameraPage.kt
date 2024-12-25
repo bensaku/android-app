@@ -1,5 +1,6 @@
 package com.hfut.mihealth
 
+import android.graphics.Bitmap
 import android.graphics.Color
 import android.view.ViewGroup
 import android.widget.LinearLayout
@@ -8,8 +9,10 @@ import androidx.camera.core.ImageCaptureException
 import androidx.camera.core.ImageProxy
 import androidx.camera.view.LifecycleCameraController
 import androidx.camera.view.PreviewView
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
@@ -30,6 +33,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -74,59 +79,72 @@ private fun CameraContent() {
     }
     //请求关联context的主线程的Executor
     val cameraExecutor = ContextCompat.getMainExecutor(context)
-    var hasPictureTaken by remember {
-        mutableStateOf(false)
-    }
+    val picBitmap = remember { mutableStateOf<ImageBitmap?>(null) }
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         floatingActionButton = {
             FloatingActionButton(onClick = {
-                cameraController.takePicture(cameraExecutor, object : ImageCapture.OnImageCapturedCallback(){
-                    override fun onCaptureSuccess(image: ImageProxy) {
-                        super.onCaptureSuccess(image)
-                        val bitmap = image.toBitmap()
-                        hasPictureTaken = true
-                    }
+                cameraController.takePicture(
+                    cameraExecutor,
+                    object : ImageCapture.OnImageCapturedCallback() {
+                        override fun onCaptureSuccess(image: ImageProxy) {
+                            super.onCaptureSuccess(image)
+                            picBitmap.value = image.toBitmap().asImageBitmap()
+                        }
 
-                    override fun onError(exception: ImageCaptureException) {
-                        super.onError(exception)
-                    }
-                })
+                        override fun onError(exception: ImageCaptureException) {
+                            super.onError(exception)
+                        }
+                    })
             }) {
-                Icon(modifier = Modifier.clip(CircleShape),
+                Icon(
+                    modifier = Modifier.clip(CircleShape),
                     painter = painterResource(id = R.drawable.mine_icon),
                     contentDescription = "拍照"
                 )
 
             }
         }
-    ) {
-        paddingValues ->
+    ) { paddingValues ->
         Box(modifier = Modifier.fillMaxSize()) {
-            AndroidView(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(paddingValues),
-                factory = { context ->
-                    PreviewView(context).apply {
-                        layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
-                        setBackgroundColor(Color.BLACK)
-                        //设置渲染的实现模式
-                        implementationMode = PreviewView.ImplementationMode.PERFORMANCE
-                        //设置缩放方式
-                        scaleType = PreviewView.ScaleType.FIT_CENTER
-                    }.also {
-                        it.controller = cameraController
-                        cameraController.bindToLifecycle(lifecycleOwner)
+            if (picBitmap.value != null) {
+                Image(bitmap = picBitmap.value!!, contentDescription = "预览")
+                Row {
+                    Button(onClick = { picBitmap.value = null }) {
+                        Text(text = "重拍")
                     }
-                },
-                onReset = {},
-                onRelease = {
-                    cameraController.unbind()
+                    Button(onClick = { picBitmap.value = null }) {
+                        Text(text = "确认")
+                    }
                 }
+            } else {
+                AndroidView(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(paddingValues),
+                    factory = { context ->
+                        PreviewView(context).apply {
+                            layoutParams = LinearLayout.LayoutParams(
+                                ViewGroup.LayoutParams.MATCH_PARENT,
+                                ViewGroup.LayoutParams.MATCH_PARENT
+                            )
+                            setBackgroundColor(Color.BLACK)
+                            //设置渲染的实现模式
+                            implementationMode = PreviewView.ImplementationMode.PERFORMANCE
+                            //设置缩放方式
+                            scaleType = PreviewView.ScaleType.FIT_CENTER
+                        }.also {
+                            it.controller = cameraController
+                            cameraController.bindToLifecycle(lifecycleOwner)
+                        }
+                    },
+                    onReset = {},
+                    onRelease = {
+                        cameraController.unbind()
+                    }
                 )
-
+            }
         }
 
     }
