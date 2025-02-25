@@ -1,5 +1,6 @@
 package com.hfut.mihealth
 
+import androidx.camera.core.processing.SurfaceProcessorNode.In
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.Image
@@ -19,6 +20,8 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SearchBar
 import androidx.compose.material3.SearchBarColors
@@ -63,18 +66,18 @@ fun FoodSearchBar() {
     SearchBar(
         modifier = Modifier.padding(8.dp),
         inputField = {
-        TextField(
-            value = query,
-            onValueChange = { query = it },
-            label = { Text("搜索食物") },
-            modifier = Modifier
-                .padding(horizontal = 20.dp, vertical = 8.dp)
-                .fillMaxWidth()
-                .height(50.dp),
-        )
-                     },
+            TextField(
+                value = query,
+                onValueChange = { query = it },
+                label = { Text("food searching") },
+                modifier = Modifier
+                    .padding(horizontal = 20.dp, vertical = 8.dp)
+                    .fillMaxWidth()
+                    .height(50.dp),
+            )
+        },
         expanded = isSearchBarExpanded.value,
-        onExpandedChange = {println("expanded")}
+        onExpandedChange = { println("expanded") }
     ) {
 
     }
@@ -109,64 +112,89 @@ fun RecordCard(navPos: NavHostController) {
                 Text(
                     text = "饮食记录",
                     style = MaterialTheme.typography.titleLarge
-                    )
+                )
                 Text(
                     text = "查看详情",
                     modifier = Modifier
                         .padding(start = 10.dp),
-                    )
-            }
-            Row(
-                modifier = Modifier
-                    .padding(all = 10.dp)
-                    .fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Text(
-                    text = "今日已摄入。。。卡路里",
-                )
-                Text(
-                    text = "脂肪",
-                    modifier = Modifier
-                        .padding(start = 10.dp)
-                )
-                Text(
-                    text = "碳水",
-                    modifier = Modifier
-                        .padding(start = 10.dp)
-                )
-                Text(
-                    text = "蛋白质",
-                    modifier = Modifier
-                        .padding(start = 10.dp)
                 )
             }
-            Row(
-                modifier = Modifier
-                    .padding(all = 10.dp)
-                    .fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Text(
-                    text = "早餐",
-                    modifier = Modifier
-                        .padding(start = 10.dp)
-                )
-                Text(
-                    text = "午餐",
-                    modifier = Modifier
-                        .padding(start = 10.dp)
-                )
-                Text(
-                    text = "晚餐",
-                    modifier = Modifier
-                        .padding(start = 10.dp)
-                )
-            }
-        }
-        
-    }
 
+            MealRecord()
+
+            MealBar()
+        }
+
+    }
+}
+
+//摄入统计部分
+@Preview
+@Composable
+fun MealRecord() {
+    Row(
+        modifier = Modifier
+            .padding(all = 10.dp)
+            .fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Text(
+            text = "今日已摄入。。。卡路里",
+        )
+        Text(
+            text = "脂肪",
+            modifier = Modifier
+                .padding(start = 10.dp)
+        )
+        Text(
+            text = "碳水",
+            modifier = Modifier
+                .padding(start = 10.dp)
+        )
+        Text(
+            text = "蛋白质",
+            modifier = Modifier
+                .padding(start = 10.dp)
+        )
+    }
+}
+
+//三餐按钮部分
+@Composable
+fun MealBar() {
+    Row(
+        modifier = Modifier
+            .padding(all = 10.dp)
+            .fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        MealIcon("早餐", R.drawable.breakfast)
+
+        MealIcon("午餐", R.drawable.launch)
+
+        MealIcon("晚餐", R.drawable.dinner)
+
+        MealIcon("加餐", R.drawable.dinner)
+    }
+}
+
+@Composable
+fun MealIcon(name: String, resource: Int) {
+    Column(
+        modifier = Modifier
+            .clickable { }
+            .padding(8.dp),
+        horizontalAlignment = androidx.compose.ui.Alignment.CenterHorizontally
+    ) {
+        // Icon with click listener
+        Icon(
+            painter = painterResource(resource),
+            contentDescription = "Favorite",
+            modifier = Modifier.padding(bottom = 4.dp)
+        )
+        // Text below the icon
+        Text(text = name)
+    }
 }
 
 //食物卡片模块
