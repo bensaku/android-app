@@ -28,6 +28,8 @@ import androidx.compose.material3.SearchBarColors
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldColors
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -48,6 +50,7 @@ fun HomePageScreen(navPos: NavHostController) {
     Column {
         FoodSearchBar()
         RecordCard(navPos)
+        WeekRecode()
         LazyColumn {
             items(items) { item ->
                 FoodCard()
@@ -58,6 +61,7 @@ fun HomePageScreen(navPos: NavHostController) {
 }
 
 //搜索框
+@Preview
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FoodSearchBar() {
@@ -69,7 +73,20 @@ fun FoodSearchBar() {
             TextField(
                 value = query,
                 onValueChange = { query = it },
-                label = { Text("food searching") },
+                label = { Text("搜索食物") },
+                leadingIcon = {
+                    Icon(
+                        painter = painterResource(id = R.drawable.search_icon), // 使用导入的图标资源
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.onSurfaceVariant // 设置图标的颜色
+                    )
+                },
+                colors = TextFieldDefaults.colors(
+                    focusedIndicatorColor = androidx.compose.ui.graphics.Color.Transparent,
+                    unfocusedIndicatorColor = androidx.compose.ui.graphics.Color.Transparent,
+                    unfocusedContainerColor = androidx.compose.ui.graphics.Color.Transparent,
+                    focusedContainerColor = androidx.compose.ui.graphics.Color.Transparent
+                ),
                 modifier = Modifier
                     .padding(horizontal = 20.dp, vertical = 8.dp)
                     .fillMaxWidth()
@@ -79,9 +96,9 @@ fun FoodSearchBar() {
         expanded = isSearchBarExpanded.value,
         onExpandedChange = { println("expanded") }
     ) {
-
     }
 }
+
 
 //饮食记录模块
 @Composable
@@ -95,7 +112,7 @@ fun RecordCard(navPos: NavHostController) {
         modifier = Modifier
             .padding(all = 8.dp)
             .fillMaxWidth()
-            .height(200.dp)
+            .height(280.dp)
             .clickable { isExpanded = !isExpanded }
     ) {
         Column(
@@ -129,7 +146,6 @@ fun RecordCard(navPos: NavHostController) {
 }
 
 //摄入统计部分
-@Preview
 @Composable
 fun MealRecord() {
     Row(
@@ -138,24 +154,44 @@ fun MealRecord() {
             .fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        Text(
-            text = "今日已摄入。。。卡路里",
-        )
-        Text(
-            text = "脂肪",
+        //todo 字体样式
+        Column(
             modifier = Modifier
-                .padding(start = 10.dp)
+                .padding(8.dp),
+            horizontalAlignment = androidx.compose.ui.Alignment.CenterHorizontally
+        ) {
+            Text(
+                text = "今日已摄入",
+            )
+
+            Text(
+                text = "114514千卡",
+            )
+        }
+        Macronutrients()
+        Macronutrients()
+        Macronutrients()
+
+    }
+}
+
+@Composable
+fun Macronutrients() {
+    Column(
+        modifier = Modifier
+            .padding(8.dp),
+        horizontalAlignment = androidx.compose.ui.Alignment.CenterHorizontally
+    ) {
+        Text(
+            text = "脂肪"
         )
         Text(
-            text = "碳水",
-            modifier = Modifier
-                .padding(start = 10.dp)
+            text = "进度条"
         )
         Text(
-            text = "蛋白质",
-            modifier = Modifier
-                .padding(start = 10.dp)
+            text = "55克"
         )
+
     }
 }
 
@@ -194,6 +230,28 @@ fun MealIcon(name: String, resource: Int) {
         )
         // Text below the icon
         Text(text = name)
+    }
+}
+
+//周报记录卡片
+@Composable
+fun WeekRecode() {
+    var isExpanded by remember {
+        mutableStateOf(false)
+    }
+    Surface(
+        shape = MaterialTheme.shapes.medium,
+        tonalElevation = 5.dp,
+        modifier = Modifier
+            .padding(all = 8.dp)
+            .fillMaxWidth()
+            .height(280.dp)
+            .clickable { isExpanded = !isExpanded }
+    ) {
+        Text(
+            text = "周报"
+        )
+
     }
 }
 
