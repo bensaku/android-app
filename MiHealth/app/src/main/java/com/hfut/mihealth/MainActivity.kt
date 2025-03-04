@@ -5,6 +5,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
@@ -26,9 +28,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -51,27 +58,36 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun MainScreen() {
     val navItems = listOf(
-        BottomItemDate("HomePage","主页",R.drawable.homepage_icon),
-        BottomItemDate("recode","记录",R.drawable.recode_icon),
-        BottomItemDate("camera","拍照",R.drawable.mine_icon),
-        BottomItemDate("mine","我的",R.drawable.mine_icon)
+        BottomItemDate("HomePage", "主页", R.drawable.homepage_icon),
+        BottomItemDate("recode", "记录", R.drawable.recode_icon),
+        BottomItemDate("camera", "拍照", R.drawable.mine_icon),
+        BottomItemDate("mine", "我的", R.drawable.mine_icon)
     )
     val navPos = rememberNavController()
+    val backgroundPainter: Painter = painterResource(R.drawable.background)
+
     Scaffold(
+        modifier = Modifier.fillMaxSize(),
         topBar = {
             TopAppBar(
                 title = { Text(text = "首页") },
                 modifier = Modifier.windowInsetsTopHeight(WindowInsets.statusBars),
-                )
+            )
         },
         bottomBar = {
-            BottomNavigationBar(navItems,navPos)
+            BottomNavigationBar(navItems, navPos)
         }
-    ) {
-        innerPadding ->
+    ) { innerPadding ->
         print(innerPadding)
         Box(modifier = Modifier.padding(innerPadding)) {
-            NavHost(navController = navPos , startDestination = "HomePage") {
+            Image(
+                painter = backgroundPainter,
+                contentDescription = null,
+                modifier = Modifier
+                    .fillMaxSize(),
+                contentScale = ContentScale.Crop
+            )
+            NavHost(navController = navPos, startDestination = "HomePage") {
                 composable("HomePage") {
                     HomePageScreen(navPos)
                 }
@@ -79,7 +95,7 @@ fun MainScreen() {
                     AppContent("记录")
                 }
                 composable("mine") {
-                    AppContent("我的")
+                    MinePageScreen()
                 }
                 composable("camera") {
                     CameraPageScreen()
@@ -87,32 +103,48 @@ fun MainScreen() {
             }
         }
     }
+
 }
 
 @Composable
 fun AppContent(item: String) {
-    Box(modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center) {
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
         Text(item)
     }
 }
 
+@Composable
+fun MinePageScreen() {
+    Image(
+        painter = painterResource(R.drawable.mine),
+        contentDescription = null,
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(
+                top = 16.dp
+            ),
+    )
+}
 
 @Composable
-fun BottomNavigationBar(items:List<BottomItemDate> ,navPos:NavHostController) {
+fun BottomNavigationBar(items: List<BottomItemDate>, navPos: NavHostController) {
     var selectedItem by remember { mutableIntStateOf(0) }
-    NavigationBar (
+    NavigationBar(
         modifier = Modifier.fillMaxWidth(1f)
-    ){
+    ) {
         items.forEachIndexed { index, s ->
             NavigationBarItem(
                 icon = { Icon(ImageVector.vectorResource(s.icon), contentDescription = null) },
                 label = { Text(s.label) },
                 selected = selectedItem == index,
-                onClick = { selectedItem = index
+                onClick = {
+                    selectedItem = index
                     navPos.navigate(s.route) {
                         //使用此方法,可以避免生成一个重复的路由堆栈
-                        popUpTo(navPos.graph.findStartDestination().id){
+                        popUpTo(navPos.graph.findStartDestination().id) {
                             saveState = true
                         }
                         //避免重复选择会创建一个新的页面副本
@@ -126,6 +158,6 @@ fun BottomNavigationBar(items:List<BottomItemDate> ,navPos:NavHostController) {
     }
 }
 
-data class BottomItemDate(val route:String ,val label:String ,val icon:Int)
+data class BottomItemDate(val route: String, val label: String, val icon: Int)
 
 

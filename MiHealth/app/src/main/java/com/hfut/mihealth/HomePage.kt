@@ -1,30 +1,33 @@
 package com.hfut.mihealth
 
+import android.content.Intent
 import androidx.camera.core.processing.SurfaceProcessorNode.In
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SearchBar
 import androidx.compose.material3.SearchBarColors
+import androidx.compose.material3.SearchBarDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -39,15 +42,23 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.BlendMode.Companion.Color
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.hfut.mihealth.ui.theme.Green
+import com.hfut.mihealth.ui.theme.ThemeWhite
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomePageScreen(navPos: NavHostController) {
     val items = listOf("1", "2", "3")
-    Column {
+    Column(
+        modifier = Modifier
+            .padding(horizontal = 10.dp)
+    ) {
         FoodSearchBar()
         RecordCard(navPos)
         WeekRecode()
@@ -66,37 +77,56 @@ fun HomePageScreen(navPos: NavHostController) {
 @Composable
 fun FoodSearchBar() {
     var query by remember { mutableStateOf("") }
-    val isSearchBarExpanded = remember { mutableStateOf(false) }
-    SearchBar(
-        modifier = Modifier.padding(8.dp),
-        inputField = {
-            TextField(
-                value = query,
-                onValueChange = { query = it },
-                label = { Text("搜索食物") },
-                leadingIcon = {
-                    Icon(
-                        painter = painterResource(id = R.drawable.search_icon), // 使用导入的图标资源
-                        contentDescription = null,
-                        tint = MaterialTheme.colorScheme.onSurfaceVariant // 设置图标的颜色
-                    )
-                },
-                colors = TextFieldDefaults.colors(
-                    focusedIndicatorColor = androidx.compose.ui.graphics.Color.Transparent,
-                    unfocusedIndicatorColor = androidx.compose.ui.graphics.Color.Transparent,
-                    unfocusedContainerColor = androidx.compose.ui.graphics.Color.Transparent,
-                    focusedContainerColor = androidx.compose.ui.graphics.Color.Transparent
-                ),
-                modifier = Modifier
-                    .padding(horizontal = 20.dp, vertical = 8.dp)
-                    .fillMaxWidth()
-                    .height(50.dp),
-            )
-        },
-        expanded = isSearchBarExpanded.value,
-        onExpandedChange = { println("expanded") }
+//    val isSearchBarExpanded = remember { mutableStateOf(false) }
+    val context = LocalContext.current
+    Surface(
+        color = Color(0xf8ffffff),
+        shape = MaterialTheme.shapes.extraLarge,
+        tonalElevation = 5.dp,
+        modifier = Modifier
+            .padding(all = 8.dp)
+            .fillMaxWidth()
+            .height(40.dp)
+            .clickable {
+                val intent = Intent(context, SearchActivity::class.java)
+                context.startActivity(intent)
+            }
     ) {
+        TextField(
+            value = query,
+            onValueChange = { query = it },
+            label = { Text("搜索食物") },
+            enabled = false,
+            leadingIcon = {
+                Icon(
+                    painter = painterResource(id = R.drawable.search_icon),
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.onSurfaceVariant // 设置图标的颜色
+                )
+            },
+            colors = TextFieldDefaults.colors(
+                disabledContainerColor = androidx.compose.ui.graphics.Color.Transparent,
+                disabledIndicatorColor = androidx.compose.ui.graphics.Color.Transparent
+            ),
+            modifier = Modifier
+                .fillMaxWidth()
+                .fillMaxHeight()
+        )
     }
+
+//    SearchBar(
+//        modifier = Modifier
+//            .padding(8.dp)
+//            .clickable {
+//                val intent = Intent(context, SearchActivity::class.java)
+//                context.startActivity(intent)
+//            },
+//        inputField = {
+//        },
+//        expanded = isSearchBarExpanded.value,
+//        onExpandedChange = { println("expanded") }
+//    ) {
+//    }
 }
 
 
@@ -107,6 +137,7 @@ fun RecordCard(navPos: NavHostController) {
         mutableStateOf(false)
     }
     Surface(
+        color = ThemeWhite,
         shape = MaterialTheme.shapes.medium,
         tonalElevation = 5.dp,
         modifier = Modifier
@@ -136,9 +167,7 @@ fun RecordCard(navPos: NavHostController) {
                         .padding(start = 10.dp),
                 )
             }
-
             MealRecord()
-
             MealBar()
         }
 
@@ -147,6 +176,7 @@ fun RecordCard(navPos: NavHostController) {
 
 //摄入统计部分
 @Composable
+@Preview
 fun MealRecord() {
     Row(
         modifier = Modifier
@@ -161,35 +191,50 @@ fun MealRecord() {
             horizontalAlignment = androidx.compose.ui.Alignment.CenterHorizontally
         ) {
             Text(
-                text = "今日已摄入",
+                text = "今日还可摄入",
             )
 
-            Text(
-                text = "114514千卡",
-            )
+            Row(
+                modifier = Modifier
+                    .padding(top = 15.dp)
+            ) {
+                Text(
+                    text = "1100",
+                    modifier = Modifier
+                       .padding(end = 5.dp),
+                    fontSize = 20.sp,
+                    color = Green
+                )
+                Text(
+                    text = "千卡",
+                )
+            }
         }
-        Macronutrients()
-        Macronutrients()
-        Macronutrients()
+        Macronutrients("脂肪")
+        Macronutrients("碳水")
+        Macronutrients("蛋白质")
 
     }
 }
 
 @Composable
-fun Macronutrients() {
+fun Macronutrients(str: String) {
     Column(
         modifier = Modifier
-            .padding(8.dp),
+            .padding(5.dp),
         horizontalAlignment = androidx.compose.ui.Alignment.CenterHorizontally
     ) {
         Text(
-            text = "脂肪"
+            text = str
+        )
+        LinearProgressIndicator(
+            progress = 0.5f,
+            modifier = Modifier
+                .padding(top = 8.dp, bottom = 8.dp)
+                .width(50.dp)
         )
         Text(
-            text = "进度条"
-        )
-        Text(
-            text = "55克"
+            text = "55/60克"
         )
 
     }
@@ -200,7 +245,7 @@ fun Macronutrients() {
 fun MealBar() {
     Row(
         modifier = Modifier
-            .padding(all = 10.dp)
+            .padding(horizontal = 10.dp)
             .fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
@@ -225,6 +270,7 @@ fun MealIcon(name: String, resource: Int) {
         // Icon with click listener
         Icon(
             painter = painterResource(resource),
+            tint = androidx.compose.ui.graphics.Color.Unspecified,
             contentDescription = "Favorite",
             modifier = Modifier.padding(bottom = 4.dp)
         )
@@ -235,21 +281,26 @@ fun MealIcon(name: String, resource: Int) {
 
 //周报记录卡片
 @Composable
+@Preview
 fun WeekRecode() {
     var isExpanded by remember {
         mutableStateOf(false)
     }
     Surface(
+        color = Color(0x86ffffff),
         shape = MaterialTheme.shapes.medium,
         tonalElevation = 5.dp,
         modifier = Modifier
             .padding(all = 8.dp)
             .fillMaxWidth()
-            .height(280.dp)
+            .height(385.dp)
             .clickable { isExpanded = !isExpanded }
     ) {
-        Text(
-            text = "周报"
+        Image(
+            painter = painterResource(R.drawable.zhoubao),
+            contentDescription = "周报表",
+            modifier = Modifier
+                .fillMaxWidth()
         )
 
     }
@@ -272,7 +323,7 @@ fun FoodCard() {
             .padding(all = 8.dp)
             .fillMaxWidth()
             .clickable { isExpanded = !isExpanded },
-        color = surfaceColor
+        color = Color(0x86ffffff),
     ) {
         Row(
             modifier = Modifier.padding(all = 8.dp)
