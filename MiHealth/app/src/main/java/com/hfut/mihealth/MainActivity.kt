@@ -18,6 +18,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemColors
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -41,6 +42,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.hfut.mihealth.ui.theme.Green
+import com.hfut.mihealth.ui.theme.ThemeWhite
 
 class MainActivity : ComponentActivity() {
     @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -69,25 +72,26 @@ fun MainScreen() {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
-            TopAppBar(
-                title = { Text(text = "首页") },
-                modifier = Modifier.windowInsetsTopHeight(WindowInsets.statusBars),
-            )
         },
         bottomBar = {
             BottomNavigationBar(navItems, navPos)
         }
     ) { innerPadding ->
         print(innerPadding)
-        Box(modifier = Modifier.padding(innerPadding)) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Color.Transparent)
+        ) {
             Image(
                 painter = backgroundPainter,
                 contentDescription = null,
                 modifier = Modifier
                     .fillMaxSize(),
-                contentScale = ContentScale.Crop
+                contentScale = ContentScale.FillBounds,
             )
-            NavHost(navController = navPos, startDestination = "HomePage") {
+            NavHost(navController = navPos, startDestination = "HomePage",
+                modifier = Modifier.padding(innerPadding)) {
                 composable("HomePage") {
                     HomePageScreen(navPos)
                 }
@@ -121,11 +125,9 @@ fun MinePageScreen() {
     Image(
         painter = painterResource(R.drawable.mine),
         contentDescription = null,
+        contentScale = ContentScale.FillBounds,
         modifier = Modifier
-            .fillMaxSize()
-            .padding(
-                top = 16.dp
-            ),
+            .fillMaxSize(),
     )
 }
 
@@ -133,13 +135,23 @@ fun MinePageScreen() {
 fun BottomNavigationBar(items: List<BottomItemDate>, navPos: NavHostController) {
     var selectedItem by remember { mutableIntStateOf(0) }
     NavigationBar(
-        modifier = Modifier.fillMaxWidth(1f)
+        modifier = Modifier.fillMaxWidth(1f),
+        containerColor = ThemeWhite
     ) {
         items.forEachIndexed { index, s ->
             NavigationBarItem(
                 icon = { Icon(ImageVector.vectorResource(s.icon), contentDescription = null) },
                 label = { Text(s.label) },
                 selected = selectedItem == index,
+                colors = NavigationBarItemColors(
+                    selectedIconColor = Green,
+                    selectedTextColor = Color.Black,
+                    unselectedIconColor = Color.Gray,
+                    unselectedTextColor = Color.Gray,
+                    selectedIndicatorColor = Color.Transparent,
+                    disabledIconColor = Color.Transparent,
+                    disabledTextColor = Color.Transparent
+                ),
                 onClick = {
                     selectedItem = index
                     navPos.navigate(s.route) {

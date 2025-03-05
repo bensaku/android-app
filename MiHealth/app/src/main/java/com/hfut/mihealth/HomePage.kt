@@ -42,6 +42,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.BlendMode.Companion.Color
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -62,18 +63,17 @@ fun HomePageScreen(navPos: NavHostController) {
         FoodSearchBar()
         RecordCard(navPos)
         WeekRecode()
-        LazyColumn {
-            items(items) { item ->
-                FoodCard()
-            }
-        }
+//        LazyColumn {
+//            items(items) { item ->
+//                FoodCard()
+//            }
+//        }
     }
 
 }
 
 //搜索框
 @Preview
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FoodSearchBar() {
     var query by remember { mutableStateOf("") }
@@ -143,7 +143,7 @@ fun RecordCard(navPos: NavHostController) {
         modifier = Modifier
             .padding(all = 8.dp)
             .fillMaxWidth()
-            .height(280.dp)
+            .height(250.dp)
             .clickable { isExpanded = !isExpanded }
     ) {
         Column(
@@ -228,10 +228,12 @@ fun Macronutrients(str: String) {
             text = str
         )
         LinearProgressIndicator(
-            progress = 0.5f,
+            progress = { 0.5f },
+            color = Green,
+            strokeCap = StrokeCap.Butt,
             modifier = Modifier
                 .padding(top = 8.dp, bottom = 8.dp)
-                .width(50.dp)
+                .width(50.dp),
         )
         Text(
             text = "55/60克"
@@ -255,7 +257,7 @@ fun MealBar() {
 
         MealIcon("晚餐", R.drawable.dinner)
 
-        MealIcon("加餐", R.drawable.dinner)
+        MealIcon("加餐", R.drawable.jiacan)
     }
 }
 
@@ -273,6 +275,8 @@ fun MealIcon(name: String, resource: Int) {
             tint = androidx.compose.ui.graphics.Color.Unspecified,
             contentDescription = "Favorite",
             modifier = Modifier.padding(bottom = 4.dp)
+                .width(36.dp)
+                .height(33.dp)
         )
         // Text below the icon
         Text(text = name)
@@ -293,7 +297,7 @@ fun WeekRecode() {
         modifier = Modifier
             .padding(all = 8.dp)
             .fillMaxWidth()
-            .height(385.dp)
+            .height(350.dp)
             .clickable { isExpanded = !isExpanded }
     ) {
         Image(
