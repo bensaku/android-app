@@ -46,7 +46,6 @@ import com.hfut.mihealth.ui.theme.Green
 import com.hfut.mihealth.ui.theme.ThemeWhite
 
 class MainActivity : ComponentActivity() {
-    @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()

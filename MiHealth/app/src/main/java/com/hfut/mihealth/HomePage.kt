@@ -263,10 +263,14 @@ fun MealBar() {
 
 @Composable
 fun MealIcon(name: String, resource: Int) {
+    val context = LocalContext.current
     Column(
         modifier = Modifier
             .clickable { }
-            .padding(8.dp),
+            .padding(8.dp)
+            .clickable {
+                context.startActivity(Intent(context, RecodeActivity::class.java))
+            },
         horizontalAlignment = androidx.compose.ui.Alignment.CenterHorizontally
     ) {
         // Icon with click listener
