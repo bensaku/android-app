@@ -37,6 +37,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -86,7 +87,7 @@ fun RecodeScreen() {
 fun TopArea() {
     // 顶部区域的内容
     // 返回 时间 三餐  拍照按钮
-    val context = LocalContext.current
+    val context = LocalView.current.context
     Column {
         Row(
             horizontalArrangement = Arrangement.SpaceBetween,
