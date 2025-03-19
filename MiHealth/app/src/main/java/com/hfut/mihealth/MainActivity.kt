@@ -1,6 +1,5 @@
 package com.hfut.mihealth
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -8,12 +7,9 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.statusBars
-import androidx.compose.foundation.layout.windowInsetsTopHeight
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
@@ -21,7 +17,6 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemColors
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -36,7 +31,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -61,7 +55,7 @@ class MainActivity : ComponentActivity() {
 fun MainScreen() {
     val navItems = listOf(
         BottomItemDate("HomePage", "主页", R.drawable.homepage_icon),
-        BottomItemDate("recode", "记录", R.drawable.recode_icon),
+        BottomItemDate("record", "记录", R.drawable.record_icon),
         BottomItemDate("camera", "拍照", R.drawable.mine_icon),
         BottomItemDate("mine", "我的", R.drawable.mine_icon)
     )
@@ -94,7 +88,7 @@ fun MainScreen() {
                 composable("HomePage") {
                     HomePageScreen(navPos)
                 }
-                composable("recode") {
+                composable("record") {
                     AppContent("记录")
                 }
                 composable("mine") {

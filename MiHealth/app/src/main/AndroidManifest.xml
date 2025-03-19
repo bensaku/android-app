@@ -22,7 +22,7 @@
             android:name=".DetailActivity"
             android:exported="false" />
         <activity
-            android:name=".RecodeActivity"
+            android:name=".RecordActivity"
             android:exported="false" />
         <activity
             android:name=".SearchActivity"

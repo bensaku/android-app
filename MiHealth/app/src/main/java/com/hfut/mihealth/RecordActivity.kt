@@ -44,19 +44,19 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
-class RecodeActivity : ComponentActivity() {
+class RecordActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            RecodeScreen()
+            RecordScreen()
         }
     }
 }
 
 @Preview
 @Composable
-fun RecodeScreen() {
+fun RecordScreen() {
     var showOverlay by remember { mutableStateOf(true) }
     Scaffold(
         bottomBar = {
@@ -76,7 +76,7 @@ fun RecodeScreen() {
 
 
             if (showOverlay) {
-                RecodeList(onClose = { showOverlay = false })
+                RecordList(onClose = { showOverlay = false })
             }
         }
 
@@ -137,14 +137,14 @@ fun TopArea() {
                 .wrapContentHeight()
         ) {
             //todo 搜索
-            RecodeSearchBar()
+            RecordSearchBar()
         }
     }
 
 }
 
 @Composable
-fun RecodeSearchBar() {
+fun RecordSearchBar() {
     var query by remember { mutableStateOf("") }
     val context = LocalContext.current
     Row(
@@ -301,7 +301,7 @@ fun BottomArea() {
 }
 
 @Composable
-fun RecodeList(onClose: () -> Unit) {
+fun RecordList(onClose: () -> Unit) {
     Box(
         modifier = Modifier
             .fillMaxSize()
