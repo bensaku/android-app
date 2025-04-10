@@ -56,7 +56,7 @@ fun MainScreen() {
     val navItems = listOf(
         BottomItemDate("HomePage", "主页", R.drawable.homepage_icon),
         BottomItemDate("record", "记录", R.drawable.record_icon),
-        BottomItemDate("camera", "拍照", R.drawable.mine_icon),
+//        BottomItemDate("camera", "拍照", R.drawable.mine_icon),
         BottomItemDate("mine", "我的", R.drawable.mine_icon)
     )
     val navPos = rememberNavController()

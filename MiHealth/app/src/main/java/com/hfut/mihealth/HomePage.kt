@@ -104,20 +104,6 @@ fun FoodSearchBar() {
                 .fillMaxHeight()
         )
     }
-
-//    SearchBar(
-//        modifier = Modifier
-//            .padding(8.dp)
-//            .clickable {
-//                val intent = Intent(context, SearchActivity::class.java)
-//                context.startActivity(intent)
-//            },
-//        inputField = {
-//        },
-//        expanded = isSearchBarExpanded.value,
-//        onExpandedChange = { println("expanded") }
-//    ) {
-//    }
 }
 
 
