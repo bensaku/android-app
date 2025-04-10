@@ -100,6 +100,7 @@ fun SearchBar() {
             modifier = Modifier
                 .align(Alignment.CenterVertically)
                 .clickable {
+                    //todo 需要重写一个通用的返回方法
                     (context as AppCompatActivity).finish()
                 }
         )
