@@ -1,6 +1,5 @@
-package com.hfut.mihealth
+package com.hfut.mihealth.ui.common.page
 
-import android.graphics.Bitmap
 import android.graphics.Color
 import android.view.ViewGroup
 import android.widget.LinearLayout
@@ -26,10 +25,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -47,6 +44,7 @@ import com.google.accompanist.permissions.PermissionState
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
 import com.google.accompanist.permissions.shouldShowRationale
+import com.hfut.mihealth.R
 
 @OptIn(ExperimentalPermissionsApi::class)
 @Preview

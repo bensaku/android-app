@@ -53,10 +53,13 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.hfut.mihealth.network.fetchFoodData
+import com.hfut.mihealth.ui.common.food.FoodSelect
 import com.hfut.mihealth.ui.theme.Green
 
 class RecordActivity : ComponentActivity() {
@@ -73,6 +76,7 @@ class RecordActivity : ComponentActivity() {
 @Composable
 fun RecordScreen() {
     var showOverlay by remember { mutableStateOf(false) }
+    var showFood by remember { mutableStateOf(false) }
     Scaffold(
         bottomBar = {
             if (!showOverlay) {
@@ -88,8 +92,9 @@ fun RecordScreen() {
                 TopArea()
                 FoodList()
             }
-
-
+            if (showFood) {
+                FoodSelect(onClose = { showFood = false })
+            }
             if (showOverlay) {
                 RecordList(onClose = { showOverlay = false })
             }
@@ -301,6 +306,9 @@ fun CategoryItemListScreen() {
                         .padding(16.dp),
                     color = if (category == selectedCategory) Color.Blue else Color.Black
                 )
+                if (index < categories.size - 1) { // 不要在最后一个元素后添加分隔线
+                    HorizontalDivider(thickness = 1.dp, color = Color.LightGray)
+                }
             }
         }
 
@@ -314,6 +322,9 @@ fun CategoryItemListScreen() {
             items?.let {
                 items(it.size) { index ->
                     FoodItem(it[index])
+                    if (index < items.size - 1) { // 不要在最后一个元素后添加分隔线
+                        HorizontalDivider(thickness = 1.dp, color = Color.LightGray)
+                    }
                 }
             }
         }
@@ -322,6 +333,7 @@ fun CategoryItemListScreen() {
 
 @Composable
 fun BottomArea(onOpen: () -> Unit) {
+    var count = 5
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
         modifier = Modifier
@@ -336,14 +348,37 @@ fun BottomArea(onOpen: () -> Unit) {
                     onOpen()
                 },
         ) {
-            Icon(
-                painter = painterResource(R.drawable.breakfast),
-                tint = androidx.compose.ui.graphics.Color.Unspecified,
-                contentDescription = "food",
-                modifier = Modifier
-                    .padding(end = 8.dp)
-                    .size(25.dp)
-            )
+            Box(
+                contentAlignment = Alignment.TopEnd
+            ) {
+                Icon(
+                    painter = painterResource(R.drawable.breakfast),
+                    tint = androidx.compose.ui.graphics.Color.Unspecified,
+                    contentDescription = "food",
+                    modifier = Modifier
+                        .padding(end = 8.dp)
+                        .size(30.dp)
+                )
+                //todo 数量显示
+                if (count > 0) {
+                    Box(
+                        modifier = Modifier
+                            .size(16.dp) // 调整大小以适应计数
+                            .clip(CircleShape)
+                            .background(Color.Red),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            text = count.toString(),
+                            style = TextStyle(
+                                color = Color.White,
+                                fontSize = 10.sp
+                            )
+                        )
+                    }
+
+                }
+            }
             Column(
                 modifier = Modifier
                     .padding(end = 8.dp)
@@ -534,7 +569,8 @@ fun FoodItem(str: String) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(16.dp),
+            .padding(16.dp)
+            .clickable { fetchFoodData() },
         verticalAlignment = Alignment.CenterVertically
     ) {
         // 左侧图片
