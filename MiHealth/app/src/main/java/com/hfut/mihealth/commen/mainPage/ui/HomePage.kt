@@ -1,4 +1,4 @@
-package com.hfut.mihealth.ui.common.page
+package com.hfut.mihealth.commen.mainPage.ui
 
 import android.content.Intent
 import androidx.compose.animation.animateColorAsState
@@ -41,7 +41,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.hfut.mihealth.R
-import com.hfut.mihealth.RecordActivity
+import com.hfut.mihealth.commen.foodRecord.RecordActivity
 import com.hfut.mihealth.SearchActivity
 import com.hfut.mihealth.ui.theme.Green
 import com.hfut.mihealth.ui.theme.ThemeWhite

@@ -1,4 +1,4 @@
-package com.hfut.mihealth.ui.common.page
+package com.hfut.mihealth.commen.foodRecord.ui
 
 import android.graphics.Color
 import android.view.ViewGroup
