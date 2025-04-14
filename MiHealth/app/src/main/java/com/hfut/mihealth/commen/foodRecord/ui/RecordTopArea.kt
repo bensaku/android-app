@@ -111,7 +111,10 @@ fun RecordTopArea(onOpen: () -> Unit, recordDate: Date, viewModel: FoodViewModel
                     .background(
                         colorResource(id = R.color.gray),
                         shape = RoundedCornerShape(8.dp)
-                    ),
+                    )
+                    .clickable {
+                        //todo 点击转跳拍照
+                    },
             ) {
                 Text(
                     text = "AI帮你记",

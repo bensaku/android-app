@@ -54,6 +54,7 @@ import com.hfut.mihealth.commen.foodRecord.viewmodel.FoodViewModel
 import com.hfut.mihealth.commen.foodRecord.ui.RecordDatePicker
 import com.hfut.mihealth.commen.foodRecord.ui.RecordFoodList
 import com.hfut.mihealth.commen.foodRecord.ui.RecordTopArea
+import com.hfut.mihealth.commen.foodRecord.ui.SelectedFoodItem
 
 class RecordActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -78,7 +79,7 @@ fun RecordScreen(viewModel: FoodViewModel = viewModel()) {
     Scaffold(
         bottomBar = {
             if (!(showOverlay || showDate || showFood)) {
-                RecordBottomArea(recordData,viewModel, onOpen = { showOverlay = true })
+                RecordBottomArea(recordData, viewModel, onOpen = { showOverlay = true })
             }
         },
     ) { innerPadding ->
@@ -87,7 +88,7 @@ fun RecordScreen(viewModel: FoodViewModel = viewModel()) {
                 modifier = Modifier
                     .padding(innerPadding)
             ) {
-                RecordTopArea(onOpen = { showDate = true }, date,viewModel)
+                RecordTopArea(onOpen = { showDate = true }, date, viewModel)
                 RecordFoodList(foodData, onFoodItemClicked = {
                     showFood = true
                     selectedFood = it
@@ -255,88 +256,4 @@ fun RecordCard(calories: String, fat: String, protein: String, carbs: String) {
             }
         }
     }
-}
-
-
-@Composable
-fun FoodItem(food: Food, onFoodItemClicked: (Food) -> Unit) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp)
-            .clickable { onFoodItemClicked(food) },
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        // 左侧图片
-        Image(
-            //todo 图片链接
-            painter = painterResource(R.drawable.launch),
-            contentDescription = "Food Image",
-            modifier = Modifier
-                .size(50.dp)
-        )
-
-        Spacer(modifier = Modifier.width(16.dp)) // 图片与文字之间的间距
-
-        // 中间两行文字
-        Column(
-            modifier = Modifier.weight(1f)
-        ) {
-            Text(text = food.name)
-            Text(text = "${food.calories} 千卡/100克", color = Color.Gray)
-        }
-
-        // 右侧添加图标
-        Icon(
-            painter = painterResource(R.drawable.addicon), // 请确保有相应的资源文件
-            contentDescription = "Add",
-            tint = androidx.compose.ui.graphics.Color.Unspecified,
-            modifier = Modifier
-                .clickable { } // 点击事件处理
-                .size(24.dp)
-        )
-    }
-}
-
-@Composable
-fun SelectedFoodItem(foodCount: FoodCount) {
-    //todo 已选食物项目的内容
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        // 左侧图片
-        Image(
-            //todo 改成图片链接
-            painter = painterResource(R.drawable.ic_launcher_background),
-            contentDescription = "Food Image",
-            modifier = Modifier
-                .size(35.dp)
-                .clip(CircleShape)
-        )
-
-        Spacer(modifier = Modifier.width(16.dp)) // 图片与文字之间的间距
-
-        // 中间两行文字
-        Column(
-            modifier = Modifier.weight(1f)
-        ) {
-            Text(text = foodCount.food.name)
-            Text(text = "${foodCount.food.calories} 千卡/100克", color = Color.Gray)
-        }
-        Text(text = "114千卡")
-        // 右侧添加图标
-        Icon(
-            painter = painterResource(R.drawable.change), // 请确保有相应的资源文件
-            contentDescription = "Add",
-            tint = androidx.compose.ui.graphics.Color.Unspecified,
-            modifier = Modifier
-                .padding(start = 5.dp)
-                .clickable { } // 点击事件处理
-                .size(24.dp)
-        )
-    }
-
 }

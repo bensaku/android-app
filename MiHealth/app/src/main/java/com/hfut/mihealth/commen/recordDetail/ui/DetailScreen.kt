@@ -19,9 +19,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.hfut.mihealth.R
-import com.hfut.mihealth.commen.foodRecord.RecordCard
-import com.hfut.mihealth.commen.foodRecord.SelectedFoodItem
-import com.hfut.mihealth.commen.mainPage.BottomNavigationBar
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Preview
@@ -55,8 +52,8 @@ fun DetailScreen() {
                     )
             ) {
                 DatePicker(state = datePickerState)
-                RecordCard("11", "11", "11,", "11")
-                //SelectedFoodItem()
+                OneDayRecordCard("11", "11", "11,", "11")
+                MealRecord()
             }
         }
     }

@@ -2,6 +2,7 @@ package com.hfut.mihealth.commen.foodRecord.ui
 
 import android.graphics.Color
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.LinearLayout
 import androidx.camera.core.ImageCapture
 import androidx.camera.core.ImageCaptureException
@@ -9,20 +10,24 @@ import androidx.camera.core.ImageProxy
 import androidx.camera.view.LifecycleCameraController
 import androidx.camera.view.PreviewView
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.DatePicker
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
@@ -32,6 +37,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -45,6 +52,8 @@ import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
 import com.google.accompanist.permissions.shouldShowRationale
 import com.hfut.mihealth.R
+import com.hfut.mihealth.commen.recordDetail.ui.MealRecord
+import com.hfut.mihealth.commen.recordDetail.ui.OneDayRecordCard
 
 @OptIn(ExperimentalPermissionsApi::class)
 @Preview
@@ -68,6 +77,7 @@ fun CameraPageScreen() {
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
+@Preview
 @Composable
 private fun CameraContent() {
     val context = LocalContext.current
@@ -79,73 +89,124 @@ private fun CameraContent() {
     val cameraExecutor = ContextCompat.getMainExecutor(context)
     val picBitmap = remember { mutableStateOf<ImageBitmap?>(null) }
 
+    val backgroundPainter: Painter = painterResource(R.drawable.background)
+
     Scaffold(
         modifier = Modifier.fillMaxSize(),
-        floatingActionButton = {
-            FloatingActionButton(onClick = {
-                cameraController.takePicture(
-                    cameraExecutor,
-                    object : ImageCapture.OnImageCapturedCallback() {
-                        override fun onCaptureSuccess(image: ImageProxy) {
-                            super.onCaptureSuccess(image)
-                            picBitmap.value = image.toBitmap().asImageBitmap()
-                        }
-
-                        override fun onError(exception: ImageCaptureException) {
-                            super.onError(exception)
-                        }
-                    })
-            }) {
-                Icon(
-                    modifier = Modifier.clip(CircleShape),
-                    painter = painterResource(id = R.drawable.mine_icon),
-                    contentDescription = "拍照"
-                )
-
-            }
-        }
-    ) { paddingValues ->
-        Box(modifier = Modifier.fillMaxSize()) {
+        topBar = {
+        },
+    ) { innerPadding ->
+        print(innerPadding)
+        Box(
+            modifier = Modifier.fillMaxSize()
+        ) {
+            Image(
+                painter = backgroundPainter,
+                contentDescription = null,
+                modifier = Modifier
+                    .fillMaxSize(),
+                contentScale = ContentScale.FillBounds,
+            )
             if (picBitmap.value != null) {
-                Image(bitmap = picBitmap.value!!, contentDescription = "预览")
-                Row {
-                    Button(onClick = { picBitmap.value = null }) {
-                        Text(text = "重拍")
-                    }
-                    Button(onClick = { picBitmap.value = null }) {
-                        Text(text = "确认")
+                Column(
+
+                ) {
+                    Image(bitmap = picBitmap.value!!, contentDescription = "预览")
+                    Row {
+                        Button(onClick = { picBitmap.value = null }) {
+                            Text(text = "重拍")
+                        }
+                        Button(onClick = { picBitmap.value = null }) {
+                            Text(text = "确认")
+                        }
                     }
                 }
             } else {
-                AndroidView(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(paddingValues),
-                    factory = { context ->
-                        PreviewView(context).apply {
-                            layoutParams = LinearLayout.LayoutParams(
-                                ViewGroup.LayoutParams.MATCH_PARENT,
-                                ViewGroup.LayoutParams.MATCH_PARENT
-                            )
-                            setBackgroundColor(Color.BLACK)
-                            //设置渲染的实现模式
-                            implementationMode = PreviewView.ImplementationMode.PERFORMANCE
-                            //设置缩放方式
-                            scaleType = PreviewView.ScaleType.FIT_CENTER
-                        }.also {
-                            it.controller = cameraController
-                            cameraController.bindToLifecycle(lifecycleOwner)
+                Column(
+
+                ) {
+
+
+                    AndroidView(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(500.dp)
+                            .padding(top = innerPadding.calculateTopPadding()),
+                        factory = { context ->
+                            PreviewView(context).apply {
+                                layoutParams = LinearLayout.LayoutParams(
+                                    ViewGroup.LayoutParams.MATCH_PARENT,
+                                    ViewGroup.LayoutParams.MATCH_PARENT
+                                )
+                                setBackgroundColor(Color.BLACK)
+                                //设置渲染的实现模式
+                                implementationMode = PreviewView.ImplementationMode.PERFORMANCE
+                                //设置缩放方式
+                                scaleType = PreviewView.ScaleType.FIT_CENTER
+                            }.also {
+                                it.controller = cameraController
+                                cameraController.bindToLifecycle(lifecycleOwner)
+                            }
+                        },
+                        onReset = {},
+                        onRelease = {
+                            cameraController.unbind()
                         }
-                    },
-                    onReset = {},
-                    onRelease = {
-                        cameraController.unbind()
+                    )
+                    Button(onClick = {
+                        cameraController.takePicture(
+                            cameraExecutor,
+                            object : ImageCapture.OnImageCapturedCallback() {
+                                override fun onCaptureSuccess(image: ImageProxy) {
+                                    super.onCaptureSuccess(image)
+                                    picBitmap.value = image.toBitmap().asImageBitmap()
+                                }
+
+                                override fun onError(exception: ImageCaptureException) {
+                                    super.onError(exception)
+                                }
+                            })
+                    }) {
+                        Icon(
+                            modifier = Modifier.clip(CircleShape),
+                            painter = painterResource(id = R.drawable.mine_icon),
+                            contentDescription = "拍照"
+                        )
+
                     }
-                )
+                }
             }
         }
 
     }
+
+//    Scaffold(
+//        modifier = Modifier.fillMaxSize(),
+//        floatingActionButton = {
+//            FloatingActionButton(onClick = {
+//                cameraController.takePicture(
+//                    cameraExecutor,
+//                    object : ImageCapture.OnImageCapturedCallback() {
+//                        override fun onCaptureSuccess(image: ImageProxy) {
+//                            super.onCaptureSuccess(image)
+//                            picBitmap.value = image.toBitmap().asImageBitmap()
+//                        }
+//
+//                        override fun onError(exception: ImageCaptureException) {
+//                            super.onError(exception)
+//                        }
+//                    })
+//            }) {
+//                Icon(
+//                    modifier = Modifier.clip(CircleShape),
+//                    painter = painterResource(id = R.drawable.mine_icon),
+//                    contentDescription = "拍照"
+//                )
+//
+//            }
+//        }
+//    ) { paddingValues ->
+//    }
 }
 
 @OptIn(ExperimentalPermissionsApi::class)

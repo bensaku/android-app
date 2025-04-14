@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.hfut.mihealth.commen.foodRecord.RecordScreen
+import com.hfut.mihealth.commen.foodRecord.ui.CameraPageScreen
 import com.hfut.mihealth.commen.recordDetail.ui.DetailScreen
 
 class DetailActivity : ComponentActivity() {
@@ -13,7 +14,8 @@ class DetailActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            DetailScreen()
+            //DetailScreen()
+            CameraPageScreen()
         }
     }
 }

@@ -27,10 +27,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.hfut.mihealth.commen.foodRecord.FoodItem
 import com.hfut.mihealth.commen.foodRecord.viewmodel.FoodViewModel
 import com.hfut.mihealth.network.data.Food
+import com.hfut.mihealth.ui.theme.CarbsYellow
+import com.hfut.mihealth.ui.theme.FatOrange
 import com.hfut.mihealth.ui.theme.Green
+import com.hfut.mihealth.ui.theme.ProteinGreen
 
 
 @SuppressLint("UnrememberedMutableInteractionSource")
@@ -69,9 +71,9 @@ fun FoodSelect(selectedFood: Food?, onClose: () -> Unit,viewModel: FoodViewModel
             Text(text = "添加食物      x")
             if (selectedFood != null) {
                 FoodItem(selectedFood, onFoodItemClicked = {})
-                FoodInfoRow("碳水", selectedFood.carbs.toString(), 0xFFFF5722)
-                FoodInfoRow("脂肪", selectedFood.fat.toString(), 0xFF8BC34A)
-                FoodInfoRow("蛋白质", selectedFood.protein.toString(), 0XFFFFEB3B)
+                FoodInfoRow("碳水", selectedFood.carbs.toString(), CarbsYellow)
+                FoodInfoRow("脂肪", selectedFood.fat.toString(), FatOrange)
+                FoodInfoRow("蛋白质", selectedFood.protein.toString(), ProteinGreen)
 
                 Row(
                     horizontalArrangement = Arrangement.SpaceBetween,
@@ -112,7 +114,7 @@ fun FoodSelect(selectedFood: Food?, onClose: () -> Unit,viewModel: FoodViewModel
 }
 
 @Composable
-fun FoodInfoRow(name: String, count: String, color: Long) {
+fun FoodInfoRow(name: String, count: String, color: Color) {
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
@@ -127,7 +129,7 @@ fun FoodInfoRow(name: String, count: String, color: Long) {
                     .padding(end = 10.dp)
                     .size(15.dp) // 设置图标的大小
                     .background(
-                        color = Color(color), // 背景颜色
+                        color = color, // 背景颜色
                         shape = RoundedCornerShape(5.dp) // 圆角半径
                     )
             ) {
@@ -137,5 +139,4 @@ fun FoodInfoRow(name: String, count: String, color: Long) {
         }
         Text(text = count + "克")
     }
-
 }
