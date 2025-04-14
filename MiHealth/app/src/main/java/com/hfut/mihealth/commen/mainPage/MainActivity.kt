@@ -1,5 +1,6 @@
 package com.hfut.mihealth.commen.mainPage
 
+import android.content.Context
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -18,6 +19,7 @@ import androidx.compose.material3.NavigationBarItemColors
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.setValue
@@ -28,9 +30,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -39,8 +43,11 @@ import androidx.navigation.compose.rememberNavController
 import com.hfut.mihealth.R
 import com.hfut.mihealth.commen.foodRecord.ui.CameraPageScreen
 import com.hfut.mihealth.commen.mainPage.ui.HomePageScreen
+import com.hfut.mihealth.commen.mainPage.viewmodel.mainViewModelclass
+import com.hfut.mihealth.network.client.AuthInterceptor
 import com.hfut.mihealth.ui.theme.Green
 import com.hfut.mihealth.ui.theme.ThemeWhite
+import com.hfut.mihealth.util.SharedPreferencesHelper
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,10 +59,26 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+private suspend fun initToken(context: Context, viewModel: mainViewModelclass) {
+    val sharedPreferences = SharedPreferencesHelper(context)
+    val savedToken = sharedPreferences.getToken()
+    if (!savedToken.isNullOrBlank()) {
+        // 如果有token，直接进入主界面
+        AuthInterceptor.setToken(savedToken)
+    } else {
+        viewModel.guestLogin()
+    }
+}
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Preview
 @Composable
-fun MainScreen() {
+fun MainScreen(viewModel: mainViewModelclass = viewModel()) {
+    // 在这里调用 initToken 方法
+    val context = LocalContext.current
+    LaunchedEffect(Unit) {
+        initToken(context, viewModel)
+    }
     val navItems = listOf(
         BottomItemDate("HomePage", "主页", R.drawable.homepage_icon),
         BottomItemDate("record", "记录", R.drawable.record_icon),
@@ -86,8 +109,10 @@ fun MainScreen() {
                     .fillMaxSize(),
                 contentScale = ContentScale.FillBounds,
             )
-            NavHost(navController = navPos, startDestination = "HomePage",
-                modifier = Modifier.padding(innerPadding)) {
+            NavHost(
+                navController = navPos, startDestination = "HomePage",
+                modifier = Modifier.padding(innerPadding)
+            ) {
                 composable("HomePage") {
                     HomePageScreen(navPos)
                 }

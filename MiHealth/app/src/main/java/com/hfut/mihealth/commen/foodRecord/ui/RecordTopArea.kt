@@ -1,6 +1,6 @@
 package com.hfut.mihealth.commen.foodRecord.ui
 
-import androidx.appcompat.app.AppCompatActivity
+import android.app.Activity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -22,6 +22,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -30,7 +31,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
@@ -38,6 +38,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.hfut.mihealth.R
+import com.hfut.mihealth.commen.foodRecord.viewmodel.FoodViewModel
 import com.hfut.mihealth.ui.theme.Green
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -49,10 +50,15 @@ private fun formatDate(millis: Long): String {
 }
 
 @Composable
-fun RecordTopArea(onOpen: () -> Unit, recordDate: Long) {
+fun RecordTopArea(onOpen: () -> Unit, recordDate: Date, viewModel: FoodViewModel) {
     // 顶部区域的内容
     // 返回 时间 三餐  拍照按钮
-    val context = LocalView.current.context
+    val context = LocalView.current.context as? Activity
+
+    // 格式化日期
+    val formattedDate = remember(recordDate) {
+        SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(recordDate)
+    }
     Column {
         Row(
             horizontalArrangement = Arrangement.SpaceBetween,
@@ -69,7 +75,7 @@ fun RecordTopArea(onOpen: () -> Unit, recordDate: Long) {
                     .padding(start = 20.dp)
                     .clickable {
                         //todo 点击返回
-                        (context as AppCompatActivity).onBackPressed()
+                        context?.onBackPressed()
                     }
             )
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
@@ -82,7 +88,7 @@ fun RecordTopArea(onOpen: () -> Unit, recordDate: Long) {
                         .clickable { onOpen() }
                 ) {
                     Text(
-                        text = formatDate(recordDate.toLong()),
+                        text = formattedDate,
                     )
                     Icon(
                         painter = painterResource(R.drawable.triangle),
@@ -117,8 +123,8 @@ fun RecordTopArea(onOpen: () -> Unit, recordDate: Long) {
             }
 
         }
-        val selectedIndex = remember { mutableStateOf(0) }
 
+        val meal = viewModel.meals.collectAsState().value
         Row(
             modifier = Modifier
                 .fillMaxWidth(),
@@ -133,15 +139,15 @@ fun RecordTopArea(onOpen: () -> Unit, recordDate: Long) {
                 Box(
                     modifier = Modifier
                         .clickable {
-                            selectedIndex.value = index
+                            viewModel.updateMeals(tag)
                         }
                         .border(
                             width = 1.dp,
-                            color = if (selectedIndex.value == index) Green else Color.LightGray,
+                            color = if (tag.equals(meal)) Green else Color.LightGray,
                             shape = RoundedCornerShape(12.dp)
                         )
                         .background(
-                            color = if (selectedIndex.value == index) Green else Color.Transparent,
+                            color = if (tag.equals(meal)) Green else Color.Transparent,
                             shape = RoundedCornerShape(12.dp)
                         )
                         .padding(vertical = 4.dp, horizontal = 16.dp),
@@ -149,9 +155,9 @@ fun RecordTopArea(onOpen: () -> Unit, recordDate: Long) {
                 ) {
                     Text(
                         text = tag,
-                        color = if (selectedIndex.value == index) Color.White else Color.Gray,
+                        color = if (tag.equals(meal)) Color.White else Color.Gray,
                         fontSize = 12.sp,
-                        fontWeight = if (selectedIndex.value == index) FontWeight.Bold else FontWeight.Normal
+                        fontWeight = if (tag.equals(meal)) FontWeight.Bold else FontWeight.Normal
                     )
                 }
             }
@@ -173,7 +179,6 @@ fun RecordTopArea(onOpen: () -> Unit, recordDate: Long) {
 @Composable
 fun RecordSearchBar() {
     var query by remember { mutableStateOf("") }
-    val context = LocalContext.current
     Surface(
         color = Color.Transparent,
         shape = MaterialTheme.shapes.extraLarge,

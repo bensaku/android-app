@@ -32,7 +32,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -71,15 +70,15 @@ class RecordActivity : ComponentActivity() {
 fun RecordScreen(viewModel: FoodViewModel = viewModel()) {
     val foodData by viewModel.foodData.collectAsState()
     val recordData by viewModel.foodCounts.collectAsState()
+    val date by viewModel.date.collectAsState()
     var showOverlay by remember { mutableStateOf(false) }
     var showFood by remember { mutableStateOf(false) }
     var showDate by remember { mutableStateOf(false) }
-    var recordDate by remember { mutableLongStateOf(System.currentTimeMillis()) }
     var selectedFood by remember { mutableStateOf<Food?>(null) }
     Scaffold(
         bottomBar = {
             if (!(showOverlay || showDate || showFood)) {
-                RecordBottomArea(recordData, onOpen = { showOverlay = true })
+                RecordBottomArea(recordData,viewModel, onOpen = { showOverlay = true })
             }
         },
     ) { innerPadding ->
@@ -88,7 +87,7 @@ fun RecordScreen(viewModel: FoodViewModel = viewModel()) {
                 modifier = Modifier
                     .padding(innerPadding)
             ) {
-                RecordTopArea(onOpen = { showDate = true }, recordDate)
+                RecordTopArea(onOpen = { showDate = true }, date,viewModel)
                 RecordFoodList(foodData, onFoodItemClicked = {
                     showFood = true
                     selectedFood = it
@@ -103,7 +102,8 @@ fun RecordScreen(viewModel: FoodViewModel = viewModel()) {
             if (showDate) {
                 RecordDatePicker(
                     onClose = { showDate = false },
-                    onDateSelected = { recordDate = it })
+                    viewModel
+                )
             }
         }
 
@@ -145,7 +145,7 @@ fun RecordDetail(recordData: MutableList<FoodCount>, onClose: () -> Unit) {
                     indication = null,
                 ) { }
         ) {
-            //todo 统计 一个概览卡片和每个小项目 下面是清空列表和保存按钮
+            //todo 统计删除功能
             if (recordData.isEmpty()) {
                 Text(
                     text = "尚未选择任何食物",

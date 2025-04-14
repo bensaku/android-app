@@ -27,10 +27,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.hfut.mihealth.R
 import com.hfut.mihealth.commen.foodRecord.viewmodel.FoodCount
+import com.hfut.mihealth.commen.foodRecord.viewmodel.FoodViewModel
 import com.hfut.mihealth.ui.theme.Green
 
 @Composable
-fun RecordBottomArea(recordData: MutableList<FoodCount>, onOpen: () -> Unit) {
+fun RecordBottomArea(
+    recordData: MutableList<FoodCount>,
+    viewModel: FoodViewModel,
+    onOpen: () -> Unit
+) {
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
         modifier = Modifier
@@ -100,8 +105,7 @@ fun RecordBottomArea(recordData: MutableList<FoodCount>, onOpen: () -> Unit) {
                 .width(140.dp)
                 .padding(end = 20.dp),
             onClick = {
-                // 模拟点击完成按钮的操作
-                // 在实际应用中，这里可以执行特定逻辑，比如保存选择或导航到其他页面
+                viewModel.submitRecord()
             },
             colors = ButtonDefaults.buttonColors(
                 containerColor = Green

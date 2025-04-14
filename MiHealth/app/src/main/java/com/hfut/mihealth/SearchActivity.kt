@@ -1,5 +1,6 @@
 package com.hfut.mihealth
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -87,7 +88,7 @@ fun SearchScreen() {
 @Composable
 fun SearchBar() {
     var query by remember { mutableStateOf("") }
-    val context = LocalContext.current
+    val context = LocalContext.current as? Activity
     Row(
         horizontalArrangement = Arrangement.Center,
         modifier = Modifier
@@ -100,8 +101,8 @@ fun SearchBar() {
             modifier = Modifier
                 .align(Alignment.CenterVertically)
                 .clickable {
-                    //todo 需要重写一个通用的返回方法
-                    (context as AppCompatActivity).finish()
+                    //todo 返回
+                    context?.onBackPressed()
                 }
         )
         Surface(

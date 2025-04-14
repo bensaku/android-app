@@ -27,11 +27,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.hfut.mihealth.commen.foodRecord.viewmodel.FoodViewModel
+import java.util.Calendar
+import java.util.Date
 
 @Preview
 @Composable
 fun DateSelectPreview() {
-    RecordDatePicker(onClose = {}, onDateSelected = {})
+    //RecordDatePicker(onClose = {}, onDateSelected = {})
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -78,7 +81,7 @@ fun DateSelect(onClose: () -> Unit) {
 @SuppressLint("UnrememberedMutableState")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun RecordDatePicker(onClose: () -> Unit,onDateSelected: (Long) -> Unit) {
+fun RecordDatePicker(onClose: () -> Unit, viewModel: FoodViewModel) {
     val openDialog = remember { mutableStateOf(true) }
     if (openDialog.value) {
         val datePickerState = rememberDatePickerState()
@@ -93,8 +96,13 @@ fun RecordDatePicker(onClose: () -> Unit,onDateSelected: (Long) -> Unit) {
                     onClick = {
                         onClose()
                         openDialog.value = false
-                        println("选中时间戳为： ${datePickerState.selectedDateMillis}")
-                        datePickerState.selectedDateMillis?.let { onDateSelected(it) }
+                        val selectedDate = if (datePickerState.selectedDateMillis != null) {
+                            Date(datePickerState.selectedDateMillis!!)
+                        } else {
+                            // 如果没有选择任何日期，则可以考虑使用当前时间或其他默认值
+                            Date()
+                        }
+                        viewModel.updateDate(selectedDate)
                     },
                     enabled = confirmEnabled.value,
                     colors = ButtonDefaults.textButtonColors(

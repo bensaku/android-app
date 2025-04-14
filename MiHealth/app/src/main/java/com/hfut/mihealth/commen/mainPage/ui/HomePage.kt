@@ -43,6 +43,7 @@ import androidx.navigation.NavHostController
 import com.hfut.mihealth.R
 import com.hfut.mihealth.commen.foodRecord.RecordActivity
 import com.hfut.mihealth.SearchActivity
+import com.hfut.mihealth.commen.recordDetail.DetailActivity
 import com.hfut.mihealth.ui.theme.Green
 import com.hfut.mihealth.ui.theme.ThemeWhite
 
@@ -271,9 +272,7 @@ fun MealIcon(name: String, resource: Int) {
 @Composable
 @Preview
 fun WeekRecord() {
-    var isExpanded by remember {
-        mutableStateOf(false)
-    }
+    val context = LocalContext.current
     Surface(
         color = Color(0x86ffffff),
         shape = MaterialTheme.shapes.medium,
@@ -282,7 +281,9 @@ fun WeekRecord() {
             .padding(all = 8.dp)
             .fillMaxWidth()
             .height(350.dp)
-            .clickable { isExpanded = !isExpanded }
+            .clickable {
+                context.startActivity(Intent(context, DetailActivity::class.java))
+            }
     ) {
         Image(
             painter = painterResource(R.drawable.zhoubao),

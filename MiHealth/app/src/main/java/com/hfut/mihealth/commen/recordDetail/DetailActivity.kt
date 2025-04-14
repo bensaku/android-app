@@ -6,13 +6,14 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.hfut.mihealth.commen.foodRecord.RecordScreen
+import com.hfut.mihealth.commen.recordDetail.ui.DetailScreen
 
 class DetailActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-
+            DetailScreen()
         }
     }
 }
