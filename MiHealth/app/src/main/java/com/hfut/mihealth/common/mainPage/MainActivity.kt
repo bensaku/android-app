@@ -1,4 +1,4 @@
-package com.hfut.mihealth.commen.mainPage
+package com.hfut.mihealth.common.mainPage
 
 import android.content.Context
 import android.os.Bundle
@@ -41,9 +41,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.hfut.mihealth.R
-import com.hfut.mihealth.commen.foodRecord.ui.CameraPageScreen
-import com.hfut.mihealth.commen.mainPage.ui.HomePageScreen
-import com.hfut.mihealth.commen.mainPage.viewmodel.mainViewModelclass
+import com.hfut.mihealth.common.foodRecord.ui.CameraPageScreen
+import com.hfut.mihealth.common.mainPage.ui.HomePageScreen
+import com.hfut.mihealth.common.mainPage.viewmodel.mainViewModelclass
 import com.hfut.mihealth.network.client.AuthInterceptor
 import com.hfut.mihealth.ui.theme.Green
 import com.hfut.mihealth.ui.theme.ThemeWhite

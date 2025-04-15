@@ -21,10 +21,13 @@
         android:theme="@style/Theme.MiHealth"
         tools:targetApi="31">
         <activity
-            android:name=".commen.recordDetail.DetailActivity"
+            android:name=".common.recordDetail.DetailActivity"
             android:exported="false" />
         <activity
-            android:name=".commen.foodRecord.RecordActivity"
+            android:name=".common.foodRecord.RecordActivity"
+            android:exported="false" />
+        <activity
+            android:name=".common.camera.CameraActivity"
             android:exported="false" />
         <activity
             android:name=".SearchActivity"
@@ -36,7 +39,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".commen.mainPage.MainActivity"
+            android:name=".common.mainPage.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.MiHealth">

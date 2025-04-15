@@ -1,4 +1,4 @@
-package com.hfut.mihealth.commen.foodRecord.viewmodel
+package com.hfut.mihealth.common.foodRecord.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

@@ -1,4 +1,4 @@
-package com.hfut.mihealth.commen.foodRecord.ui
+package com.hfut.mihealth.common.foodRecord.ui
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -20,7 +20,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.hfut.mihealth.R
-import com.hfut.mihealth.commen.foodRecord.viewmodel.FoodCount
+import com.hfut.mihealth.common.foodRecord.viewmodel.FoodCount
 
 @Composable
 fun SelectedFoodItem(foodCount: FoodCount) {

@@ -1,6 +1,8 @@
-package com.hfut.mihealth.commen.foodRecord.ui
+package com.hfut.mihealth.common.foodRecord.ui
 
 import android.annotation.SuppressLint
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -27,8 +29,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.hfut.mihealth.commen.foodRecord.viewmodel.FoodViewModel
-import java.util.Calendar
+import com.hfut.mihealth.common.foodRecord.viewmodel.FoodViewModel
 import java.util.Date
 
 @Preview
@@ -78,6 +79,7 @@ fun DateSelect(onClose: () -> Unit) {
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @SuppressLint("UnrememberedMutableState")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -124,9 +126,7 @@ fun RecordDatePicker(onClose: () -> Unit, viewModel: FoodViewModel) {
                 }
             }
         ) {
-            //todo 颜色
             DatePicker(state = datePickerState)
         }
     }
-
 }

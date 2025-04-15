@@ -1,4 +1,4 @@
-package com.hfut.mihealth.commen.foodRecord.ui
+package com.hfut.mihealth.common.foodRecord.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -26,8 +26,8 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.hfut.mihealth.R
-import com.hfut.mihealth.commen.foodRecord.viewmodel.FoodCount
-import com.hfut.mihealth.commen.foodRecord.viewmodel.FoodViewModel
+import com.hfut.mihealth.common.foodRecord.viewmodel.FoodCount
+import com.hfut.mihealth.common.foodRecord.viewmodel.FoodViewModel
 import com.hfut.mihealth.ui.theme.Green
 
 @Composable

@@ -1,4 +1,4 @@
-package com.hfut.mihealth.commen.recordDetail.ui
+package com.hfut.mihealth.common.recordDetail.ui
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
@@ -30,7 +29,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.hfut.mihealth.R
-import com.hfut.mihealth.commen.foodRecord.viewmodel.FoodCount
+import com.hfut.mihealth.common.foodRecord.viewmodel.FoodCount
 import com.hfut.mihealth.network.data.Food
 import com.hfut.mihealth.ui.theme.Green
 

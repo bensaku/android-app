@@ -1,4 +1,4 @@
-package com.hfut.mihealth.commen.foodRecord.ui
+package com.hfut.mihealth.common.foodRecord.ui
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable

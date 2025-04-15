@@ -1,4 +1,4 @@
-package com.hfut.mihealth.commen.foodRecord.ui
+package com.hfut.mihealth.common.foodRecord.ui
 
 import android.app.Activity
 import androidx.compose.foundation.background
@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -31,6 +32,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
@@ -38,16 +40,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.hfut.mihealth.R
-import com.hfut.mihealth.commen.foodRecord.viewmodel.FoodViewModel
+import com.hfut.mihealth.common.camera.CameraActivity
+import com.hfut.mihealth.common.foodRecord.viewmodel.FoodViewModel
 import com.hfut.mihealth.ui.theme.Green
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
-
-private fun formatDate(millis: Long): String {
-    val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-    return sdf.format(Date(millis))
-}
 
 @Composable
 fun RecordTopArea(onOpen: () -> Unit, recordDate: Date, viewModel: FoodViewModel) {
@@ -60,12 +58,12 @@ fun RecordTopArea(onOpen: () -> Unit, recordDate: Date, viewModel: FoodViewModel
         SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(recordDate)
     }
     Column {
+        Spacer(modifier = Modifier.height(10.dp))
         Row(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
                 .fillMaxWidth()
-                .height(70.dp)
                 .wrapContentHeight()
         ) {
             Icon(
@@ -74,7 +72,6 @@ fun RecordTopArea(onOpen: () -> Unit, recordDate: Date, viewModel: FoodViewModel
                 modifier = Modifier
                     .padding(start = 20.dp)
                     .clickable {
-                        //todo 点击返回
                         context?.onBackPressed()
                     }
             )
@@ -101,6 +98,7 @@ fun RecordTopArea(onOpen: () -> Unit, recordDate: Date, viewModel: FoodViewModel
                     )
                 }
             }
+            val context = LocalContext.current as? Activity
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center,
@@ -113,7 +111,12 @@ fun RecordTopArea(onOpen: () -> Unit, recordDate: Date, viewModel: FoodViewModel
                         shape = RoundedCornerShape(8.dp)
                     )
                     .clickable {
-                        //todo 点击转跳拍照
+                        context?.startActivity(
+                            android.content.Intent(
+                                context,
+                                CameraActivity::class.java
+                            )
+                        )
                     },
             ) {
                 Text(
@@ -124,8 +127,10 @@ fun RecordTopArea(onOpen: () -> Unit, recordDate: Date, viewModel: FoodViewModel
                     contentDescription = "camera",
                 )
             }
-
         }
+
+        Spacer(modifier = Modifier.height(10.dp))
+
 
         val meal = viewModel.meals.collectAsState().value
         Row(
@@ -165,6 +170,9 @@ fun RecordTopArea(onOpen: () -> Unit, recordDate: Date, viewModel: FoodViewModel
                 }
             }
         }
+
+        Spacer(modifier = Modifier.height(10.dp))
+
         Row(
             horizontalArrangement = Arrangement.SpaceEvenly,
             modifier = Modifier
@@ -175,6 +183,7 @@ fun RecordTopArea(onOpen: () -> Unit, recordDate: Date, viewModel: FoodViewModel
             //todo 搜索
             RecordSearchBar()
         }
+        Spacer(modifier = Modifier.height(15.dp))
     }
 }
 

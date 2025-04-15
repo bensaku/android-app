@@ -1,4 +1,4 @@
-package com.hfut.mihealth.commen.mainPage.viewmodel
+package com.hfut.mihealth.common.mainPage.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel

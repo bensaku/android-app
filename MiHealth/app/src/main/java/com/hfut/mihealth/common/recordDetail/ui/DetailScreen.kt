@@ -1,4 +1,4 @@
-package com.hfut.mihealth.commen.recordDetail.ui
+package com.hfut.mihealth.common.recordDetail.ui
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -51,6 +51,7 @@ fun DetailScreen() {
                         20.dp
                     )
             ) {
+
                 DatePicker(state = datePickerState)
                 OneDayRecordCard("11", "11", "11,", "11")
                 MealRecord()

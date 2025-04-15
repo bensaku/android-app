@@ -75,7 +75,7 @@ dependencies {
     implementation(libs.androidx.camera.camera2)
     implementation(libs.androidx.camera.lifecycle)
     implementation(libs.androidx.camera.video)
-    implementation(libs.androidx.camera.view )
+    implementation(libs.androidx.camera.view)
     implementation(libs.androidx.camera.extensions)
 
     //accompanist处理权限依赖库
@@ -89,5 +89,12 @@ dependencies {
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.9.0' // 使用RxJava
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.1' // RxAndroid for RxJava2
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.0' // 可选，用于协程支持
+
+    //日历库
+    // The view calendar library for Android
+    implementation 'com.kizitonwose.calendar:view:2.6.0'
+
+    // The compose calendar library for Android
+    implementation 'com.kizitonwose.calendar:compose:2.6.0'
 
 }

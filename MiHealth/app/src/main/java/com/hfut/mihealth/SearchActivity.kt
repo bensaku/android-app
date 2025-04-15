@@ -174,7 +174,17 @@ fun SearchBar() {
 fun SearchHistory() {
 
     // 存储搜索历史记录
-    var searchHistory by remember { mutableStateOf(mutableListOf<String>("aaa", "bbb", "ccc", "bbb", "ccc")) }
+    var searchHistory by remember {
+        mutableStateOf(
+            mutableListOf<String>(
+                "aaa",
+                "bbb",
+                "ccc",
+                "bbb",
+                "ccc"
+            )
+        )
+    }
     // 存储当前输入的搜索内容
     var searchQuery by remember { mutableStateOf("aaa") }
 
@@ -219,7 +229,12 @@ fun SearchHistory() {
                                 // 当点击历史记录时，可以重新设置搜索框内容
                                 searchQuery = historyItem
                             }
-                            .then(Modifier.padding(horizontal = 16.dp, vertical = 8.dp)), // 添加内边距制造胶囊形状
+                            .then(
+                                Modifier.padding(
+                                    horizontal = 16.dp,
+                                    vertical = 8.dp
+                                )
+                            ), // 添加内边距制造胶囊形状
                         style = MaterialTheme.typography.bodyMedium // 根据主题调整文本样式
                     )
                 }

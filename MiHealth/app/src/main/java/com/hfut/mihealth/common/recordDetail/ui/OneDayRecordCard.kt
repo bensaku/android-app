@@ -1,4 +1,4 @@
-package com.hfut.mihealth.commen.recordDetail.ui
+package com.hfut.mihealth.common.recordDetail.ui
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Column

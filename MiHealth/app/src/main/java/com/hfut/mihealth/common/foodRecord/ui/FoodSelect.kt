@@ -1,4 +1,4 @@
-package com.hfut.mihealth.commen.foodRecord.ui
+package com.hfut.mihealth.common.foodRecord.ui
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.background
@@ -27,7 +27,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.hfut.mihealth.commen.foodRecord.viewmodel.FoodViewModel
+import com.hfut.mihealth.common.foodRecord.viewmodel.FoodViewModel
 import com.hfut.mihealth.network.data.Food
 import com.hfut.mihealth.ui.theme.CarbsYellow
 import com.hfut.mihealth.ui.theme.FatOrange

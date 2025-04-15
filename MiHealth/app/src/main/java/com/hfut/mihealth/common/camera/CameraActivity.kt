@@ -1,15 +1,12 @@
-package com.hfut.mihealth.commen.recordDetail
+package com.hfut.mihealth.common.camera
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
-import com.hfut.mihealth.commen.foodRecord.RecordScreen
-import com.hfut.mihealth.commen.foodRecord.ui.CameraPageScreen
-import com.hfut.mihealth.commen.recordDetail.ui.DetailScreen
+import com.hfut.mihealth.common.foodRecord.ui.CameraPageScreen
 
-class DetailActivity : ComponentActivity() {
+class CameraActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
