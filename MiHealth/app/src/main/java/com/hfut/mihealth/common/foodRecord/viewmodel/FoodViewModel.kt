@@ -2,6 +2,7 @@ package com.hfut.mihealth.common.foodRecord.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.hfut.mihealth.common.recordDetail.viewmodel.total
 import com.hfut.mihealth.network.FoodService
 import com.hfut.mihealth.network.client.RetrofitClient
 import com.hfut.mihealth.network.data.Food
@@ -27,6 +28,16 @@ class FoodViewModel : ViewModel() {
     //食物选择列表的数据
     private val _foodData = MutableStateFlow<Map<String, List<Food>>>(emptyMap())
     val foodData: StateFlow<Map<String, List<Food>>> get() = _foodData
+
+    //选中的食物数据
+    private val _foodCounts = MutableStateFlow<MutableList<FoodCount>>(mutableListOf())
+    val foodCounts: StateFlow<MutableList<FoodCount>> get() = _foodCounts
+
+    private val _total = MutableStateFlow<total>(total(0, 0.0, 0.0, 0.0))
+    val total: StateFlow<total> get() = _total
+
+    private val _closeScreenFlag = MutableStateFlow(false)
+    val closeScreenFlag: StateFlow<Boolean> get() = _closeScreenFlag
 
     private val disposable = CompositeDisposable()
 
@@ -62,9 +73,6 @@ class FoodViewModel : ViewModel() {
         }
     }
 
-    //选中的食物数据
-    private val _foodCounts = MutableStateFlow<MutableList<FoodCount>>(mutableListOf())
-    val foodCounts: StateFlow<MutableList<FoodCount>> get() = _foodCounts
 
     fun addFoodCount(food: Food, count: Int) {
         val updatedList = _foodCounts.value.orEmpty().toMutableList()
@@ -85,6 +93,7 @@ class FoodViewModel : ViewModel() {
             updatedList.add(FoodCount(food, newCount))
             _foodCounts.value = updatedList
         }
+        countTotal()
     }
 
     private fun List<FoodCount>.orEmpty(): List<FoodCount> = this ?: mutableListOf()
@@ -127,12 +136,21 @@ class FoodViewModel : ViewModel() {
                 .subscribe(){
                     response ->
                     if (response) {
-                        //todo 提交成功
                         cleanData()
+                        _closeScreenFlag.value = true
                     }
                 }
         }
+    }
 
+    private fun countTotal() {
+        val newTotal = total(
+            totalCalories = foodCounts.value.sumOf { it.food.calories * it.count/100 },
+            totalCarbohydrates = foodCounts.value.sumOf { it.food.carbs * it.count/100 },
+            totalFats = foodCounts.value.sumOf { it.food.fat * it.count/100 },
+            totalProteins = foodCounts.value.sumOf { it.food.protein * it.count/100 }
+        )
+        _total.value = newTotal
     }
 
 

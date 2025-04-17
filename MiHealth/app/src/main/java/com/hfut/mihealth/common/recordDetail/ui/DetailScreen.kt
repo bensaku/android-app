@@ -29,11 +29,9 @@ import com.hfut.mihealth.common.recordDetail.viewmodel.RecordViewModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Preview
 @Composable
-fun DetailScreen(viewModel: RecordViewModel = viewModel()) {
-    val recordData by viewModel.recordData.collectAsState()
-    val total by viewModel.total.collectAsState()
+fun DetailScreen() {
+
     val backgroundPainter: Painter = painterResource(R.drawable.background)
-    val datePickerState = rememberDatePickerState()
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -58,23 +56,29 @@ fun DetailScreen(viewModel: RecordViewModel = viewModel()) {
                     .padding(innerPadding)
             ) {
                 RecordTopBar()
-                RecordDate(viewModel)
-                //DatePicker(state = datePickerState)
-                OneDayRecordCard(
-                    total.totalCalories.toString(),
-                    total.totalFats.toString(),
-                    total.totalProteins.toString(),
-                    total.totalCarbohydrates.toString()
-                )
-//                recordData.forEach() { it ->
-//                    MealRecord(it.key, it.value)
-//                }
-                LazyColumn {
-                    items(recordData.size) { index ->
-                        val (mealType, records) = recordData.toList().elementAt(index)
-                        MealRecord(mealType, records)
-                    }
-                }
+                RecordArea()
+            }
+        }
+    }
+}
+
+@RequiresApi(Build.VERSION_CODES.O)
+@Composable
+fun RecordArea(viewModel: RecordViewModel = viewModel()) {
+    val recordData by viewModel.recordData.collectAsState()
+    val total by viewModel.total.collectAsState()
+    Column {
+        RecordDate(viewModel)
+        OneDayRecordCard(
+            total.totalCalories.toString(),
+            "%.2f".format(total.totalFats),
+            "%.2f".format(total.totalProteins),
+            "%.2f".format(total.totalCarbohydrates)
+        )
+        LazyColumn {
+            items(recordData.size) { index ->
+                val (mealType, records) = recordData.toList().elementAt(index)
+                MealRecord(mealType, records)
             }
         }
     }

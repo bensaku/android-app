@@ -26,6 +26,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.hfut.mihealth.common.foodRecord.viewmodel.FoodViewModel
 import com.hfut.mihealth.network.data.Food
@@ -37,7 +38,7 @@ import com.hfut.mihealth.ui.theme.ProteinGreen
 
 @SuppressLint("UnrememberedMutableInteractionSource")
 @Composable
-fun FoodSelect(selectedFood: Food?, onClose: () -> Unit,viewModel: FoodViewModel = viewModel()) {
+fun FoodSelect(selectedFood: Food?, onClose: () -> Unit, viewModel: FoodViewModel = viewModel()) {
     val interactionSource = MutableInteractionSource()
     Box(
         modifier = Modifier
@@ -68,7 +69,10 @@ fun FoodSelect(selectedFood: Food?, onClose: () -> Unit,viewModel: FoodViewModel
                 ) { }
         ) {
             val sliderValue = remember { mutableStateOf(50f) }
-            Text(text = "添加食物      x")
+            Text(
+                text = "添加食物",
+                fontSize = 20.sp,
+            )
             if (selectedFood != null) {
                 FoodItem(selectedFood, onFoodItemClicked = {})
                 FoodInfoRow("碳水", selectedFood.carbs.toString(), CarbsYellow)
@@ -77,9 +81,13 @@ fun FoodSelect(selectedFood: Food?, onClose: () -> Unit,viewModel: FoodViewModel
 
                 Row(
                     horizontalArrangement = Arrangement.SpaceBetween,
-                ){
-                    Text(text = "卡路里"+selectedFood.calories.toString())
-                    Text(text = sliderValue.value.toString()+"克", modifier = Modifier.padding(horizontal = 15.dp))
+                    modifier = Modifier.padding(vertical = 10.dp)
+                ) {
+                    Text(text = "卡路里 " + selectedFood.calories.toString())
+                    Text(
+                        text = "约"+"%.0f".format(sliderValue.value) + "克",
+                        modifier = Modifier.padding(horizontal = 15.dp)
+                    )
                 }
             }
 
@@ -89,7 +97,8 @@ fun FoodSelect(selectedFood: Food?, onClose: () -> Unit,viewModel: FoodViewModel
                 },
                 valueRange = 0f..100f,
                 steps = 10,
-                modifier = Modifier.width(300.dp)
+                modifier = Modifier
+                    .width(300.dp)
                     .height(40.dp)
             )
 
@@ -99,7 +108,7 @@ fun FoodSelect(selectedFood: Food?, onClose: () -> Unit,viewModel: FoodViewModel
                     .padding(horizontal = 40.dp)
                     .padding(top = 20.dp),
                 onClick = {
-                    viewModel.updateOrAddFoodCount(selectedFood!!,sliderValue.value.toInt())
+                    viewModel.updateOrAddFoodCount(selectedFood!!, sliderValue.value.toInt())
                     onClose()
                 },
                 colors = ButtonDefaults.buttonColors(
@@ -123,7 +132,7 @@ fun FoodInfoRow(name: String, count: String, color: Color) {
             .padding(horizontal = 20.dp)
             .padding(top = 10.dp)
     ) {
-        Row(verticalAlignment = Alignment.CenterVertically,) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
             Box(
                 modifier = Modifier
                     .padding(end = 10.dp)

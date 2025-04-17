@@ -21,6 +21,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.hfut.mihealth.R
 import com.hfut.mihealth.common.foodRecord.viewmodel.FoodCount
+import com.hfut.mihealth.customCompose.GlideImage
 
 @Composable
 fun SelectedFoodItem(foodCount: FoodCount) {
@@ -31,13 +32,19 @@ fun SelectedFoodItem(foodCount: FoodCount) {
         verticalAlignment = Alignment.CenterVertically
     ) {
         // 左侧图片
-        Image(
-            //todo 改成图片链接
-            painter = painterResource(R.drawable.ic_launcher_background),
-            contentDescription = "Food Image",
+//        Image(
+//            painter = painterResource(R.drawable.ic_launcher_background),
+//            contentDescription = "Food Image",
+//            modifier = Modifier
+//                .size(35.dp)
+//                .clip(CircleShape)
+//        )
+        GlideImage(
+            url = foodCount.food.imageurl,
             modifier = Modifier
                 .size(35.dp)
                 .clip(CircleShape)
+
         )
 
         Spacer(modifier = Modifier.width(16.dp)) // 图片与文字之间的间距
@@ -49,12 +56,12 @@ fun SelectedFoodItem(foodCount: FoodCount) {
             Text(text = foodCount.food.name)
             Text(text = "${foodCount.food.calories} 千卡/100克", color = Color.Gray)
         }
-        Text(text = "114千卡")
+        Text(text = "${foodCount.count} 克")
         // 右侧添加图标
         Icon(
             painter = painterResource(R.drawable.change), // 请确保有相应的资源文件
             contentDescription = "Add",
-            tint = androidx.compose.ui.graphics.Color.Unspecified,
+            tint = Color.Unspecified,
             modifier = Modifier
                 .padding(start = 5.dp)
                 .clickable { } // 点击事件处理

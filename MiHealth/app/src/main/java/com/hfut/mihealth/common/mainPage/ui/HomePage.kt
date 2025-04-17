@@ -1,10 +1,12 @@
 package com.hfut.mihealth.common.mainPage.ui
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -114,6 +116,7 @@ fun FoodSearchBar() {
 
 
 //饮食记录模块
+@SuppressLint("UnrememberedMutableInteractionSource")
 @Composable
 fun RecordCard(navPos: NavHostController) {
     var isExpanded by remember {
@@ -127,7 +130,10 @@ fun RecordCard(navPos: NavHostController) {
             .padding(all = 8.dp)
             .fillMaxWidth()
             .height(250.dp)
-            .clickable { isExpanded = !isExpanded }
+            .clickable(
+                interactionSource = MutableInteractionSource(),
+                indication = null,
+            ) { isExpanded = !isExpanded }
     ) {
         Column(
             modifier = Modifier
@@ -289,7 +295,10 @@ fun WeekRecord() {
             .padding(all = 8.dp)
             .fillMaxWidth()
             .height(350.dp)
-            .clickable {
+            .clickable(
+                indication = null,
+                interactionSource = remember { MutableInteractionSource() },
+            ) {
                 context.startActivity(Intent(context, DetailActivity::class.java))
             }
     ) {

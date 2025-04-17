@@ -37,7 +37,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -50,7 +49,7 @@ import com.hfut.mihealth.common.foodRecord.ui.RecordDatePicker
 import com.hfut.mihealth.common.foodRecord.ui.RecordFoodList
 import com.hfut.mihealth.common.foodRecord.ui.RecordTopArea
 import com.hfut.mihealth.common.foodRecord.ui.SelectedFoodItem
-import com.hfut.mihealth.ui.theme.MiHealthTheme
+import com.hfut.mihealth.common.recordDetail.viewmodel.total
 
 class RecordActivity : ComponentActivity() {
     @RequiresApi(Build.VERSION_CODES.O)
@@ -69,6 +68,7 @@ fun RecordScreen(meal: String, viewModel: FoodViewModel = viewModel()) {
     val foodData by viewModel.foodData.collectAsState()
     val recordData by viewModel.foodCounts.collectAsState()
     val date by viewModel.date.collectAsState()
+    val total by viewModel.total.collectAsState()
     viewModel.updateMeals(meal)
     var showOverlay by remember { mutableStateOf(false) }
     var showFood by remember { mutableStateOf(false) }
@@ -77,7 +77,7 @@ fun RecordScreen(meal: String, viewModel: FoodViewModel = viewModel()) {
     Scaffold(
         bottomBar = {
             if (!(showOverlay || showDate || showFood)) {
-                RecordBottomArea(recordData, viewModel, onOpen = { showOverlay = true })
+                RecordBottomArea(recordData, total, viewModel, onOpen = { showOverlay = true })
             }
         },
     ) { innerPadding ->
@@ -96,7 +96,7 @@ fun RecordScreen(meal: String, viewModel: FoodViewModel = viewModel()) {
                 FoodSelect(selectedFood, onClose = { showFood = false })
             }
             if (showOverlay) {
-                RecordDetail(recordData, onClose = { showOverlay = false })
+                RecordDetail(recordData, total, onClose = { showOverlay = false })
             }
             if (showDate) {
                 RecordDatePicker(
@@ -112,8 +112,9 @@ fun RecordScreen(meal: String, viewModel: FoodViewModel = viewModel()) {
 
 @SuppressLint("UnrememberedMutableInteractionSource")
 @Composable
-fun RecordDetail(recordData: MutableList<FoodCount>, onClose: () -> Unit) {
+fun RecordDetail(recordData: MutableList<FoodCount>, total: total, onClose: () -> Unit) {
     val interactionSource = MutableInteractionSource()
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -125,8 +126,6 @@ fun RecordDetail(recordData: MutableList<FoodCount>, onClose: () -> Unit) {
                 onClose()
             },
     ) {
-        // 假设这是用户已选择的食物列表
-        val selectedFoods = listOf("苹果", "香蕉", "橙子", "橙子", "橙子", "橙子")
 
         // 左侧的统计
         Column(
@@ -151,7 +150,10 @@ fun RecordDetail(recordData: MutableList<FoodCount>, onClose: () -> Unit) {
                     color = Color.Gray
                 )
             } else {
-                RecordCard("11", "11", "11,", "11")
+                RecordCard(
+                    total.totalCalories.toString(), "%.2f".format(total.totalFats),
+                    "%.2f".format(total.totalProteins), "%.2f".format(total.totalCarbohydrates)
+                )
                 LazyColumn(
                     modifier = Modifier
                         .fillMaxWidth()

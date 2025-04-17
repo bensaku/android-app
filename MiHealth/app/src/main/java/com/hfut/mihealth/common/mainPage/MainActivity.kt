@@ -1,10 +1,12 @@
 package com.hfut.mihealth.common.mainPage
 
 import android.content.Context
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -44,12 +46,15 @@ import com.hfut.mihealth.R
 import com.hfut.mihealth.common.camera.ui.CameraPageScreen
 import com.hfut.mihealth.common.mainPage.ui.HomePageScreen
 import com.hfut.mihealth.common.mainPage.viewmodel.mainViewModelclass
+import com.hfut.mihealth.common.recordDetail.ui.DetailScreen
+import com.hfut.mihealth.common.recordDetail.ui.RecordArea
 import com.hfut.mihealth.network.client.AuthInterceptor
 import com.hfut.mihealth.ui.theme.Green
 import com.hfut.mihealth.ui.theme.ThemeWhite
 import com.hfut.mihealth.util.SharedPreferencesHelper
 
 class MainActivity : ComponentActivity() {
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -70,7 +75,7 @@ private suspend fun initToken(context: Context, viewModel: mainViewModelclass) {
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
+@RequiresApi(Build.VERSION_CODES.O)
 @Preview
 @Composable
 fun MainScreen(viewModel: mainViewModelclass = viewModel()) {
@@ -117,7 +122,7 @@ fun MainScreen(viewModel: mainViewModelclass = viewModel()) {
                     HomePageScreen(navPos)
                 }
                 composable("record") {
-                    AppContent("记录")
+                    RecordArea()
                 }
                 composable("mine") {
                     MinePageScreen()
@@ -144,7 +149,7 @@ fun AppContent(item: String) {
 @Composable
 fun MinePageScreen() {
     Image(
-        painter = painterResource(R.drawable.mine),
+        painter = painterResource(R.drawable.minebackground),
         contentDescription = null,
         contentScale = ContentScale.FillBounds,
         modifier = Modifier

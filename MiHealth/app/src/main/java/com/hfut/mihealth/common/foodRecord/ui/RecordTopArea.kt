@@ -32,6 +32,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
@@ -43,7 +44,12 @@ import androidx.compose.ui.unit.sp
 import com.hfut.mihealth.R
 import com.hfut.mihealth.common.camera.CameraActivity
 import com.hfut.mihealth.common.foodRecord.viewmodel.FoodViewModel
+import com.hfut.mihealth.ui.theme.AIButtonColor3
+import com.hfut.mihealth.ui.theme.AIButtonColor4
+import com.hfut.mihealth.ui.theme.CarbsYellow
+import com.hfut.mihealth.ui.theme.FatOrange
 import com.hfut.mihealth.ui.theme.Green
+import com.hfut.mihealth.ui.theme.ThemeWhite
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -108,10 +114,22 @@ fun RecordTopArea(onOpen: () -> Unit, recordDate: Date, viewModel: FoodViewModel
                     .height(30.dp)
                     .width(100.dp)
                     .background(
-                        colorResource(id = R.color.gray),
+                        brush = Brush.linearGradient(
+                            colors = listOf(
+                                FatOrange.copy(alpha = 0.7f), // 调整透明度
+                                AIButtonColor3.copy(alpha = 0.7f), // 调整透明度
+                                AIButtonColor4.copy(alpha = 0.5f), // 调整透明度
+                            ),
+                            // 设置起点和终点以创建对角线渐变
+                            start = androidx.compose.ui.geometry.Offset(0f, 0f), // 左上角
+                            end = androidx.compose.ui.geometry.Offset(Float.POSITIVE_INFINITY, Float.POSITIVE_INFINITY) // 右下角
+                        ),
                         shape = RoundedCornerShape(8.dp)
                     )
-                    .clickable {
+                    .clickable(
+                        indication = null,
+                        interactionSource = remember { MutableInteractionSource() },
+                    ) {
                         context?.startActivity(
                             android.content.Intent(
                                 context,
@@ -122,10 +140,15 @@ fun RecordTopArea(onOpen: () -> Unit, recordDate: Date, viewModel: FoodViewModel
             ) {
                 Text(
                     text = "AI帮你记",
+                    color = ThemeWhite,
+                    fontSize = 13.sp,
+                    fontStyle = androidx.compose.ui.text.font.FontStyle.Normal,
                 )
                 Icon(
+                    modifier = Modifier.padding(start = 2.dp),
                     painter = painterResource(R.drawable.camera),
                     contentDescription = "camera",
+                    tint = ThemeWhite
                 )
             }
         }

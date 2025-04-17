@@ -28,6 +28,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.hfut.mihealth.R
+import com.hfut.mihealth.customCompose.GlideImage
 import com.hfut.mihealth.network.data.RecordResponse
 import com.hfut.mihealth.ui.theme.Green
 
@@ -79,13 +80,12 @@ fun RecordItem(foodCount: RecordResponse) {
         verticalAlignment = Alignment.CenterVertically
     ) {
         // 左侧图片
-        Image(
-            //todo 改成图片链接
-            painter = painterResource(R.drawable.ic_launcher_background),
-            contentDescription = "Food Image",
+        GlideImage(
+            url = foodCount.imageurl,
             modifier = Modifier
                 .size(35.dp)
                 .clip(CircleShape)
+
         )
 
         Spacer(modifier = Modifier.width(16.dp)) // 图片与文字之间的间距

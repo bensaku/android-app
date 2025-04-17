@@ -83,7 +83,6 @@ fun CameraPageScreen() {
     } else {
         //不接受
         CameraContent()
-        //NoPermission(cameraPermissionState = cameraPermissionState)
     }
 }
 
@@ -150,7 +149,7 @@ private fun CameraContent() {
                                 // 模拟异步操作
 
                                 coroutineScope.launch {
-                                    delay(3000) // 模拟耗时操作
+                                    delay(2000) // 模拟耗时操作
                                     picBitmap.value = null
                                     context?.onBackPressed()
                                 }
@@ -181,7 +180,7 @@ private fun CameraContent() {
                                                 .padding(bottom = 16.dp),
                                             color = Green
                                         )
-                                        Text(text = "正在上传...", fontSize = 16.sp)
+                                        Text(text = "】、正在上传...", fontSize = 16.sp)
                                     }
                                 }
                             }

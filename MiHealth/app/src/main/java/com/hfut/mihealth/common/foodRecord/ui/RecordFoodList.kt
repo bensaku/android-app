@@ -20,6 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.hfut.mihealth.network.data.Food
+import com.hfut.mihealth.ui.theme.Green
 
 
 @Composable
@@ -28,7 +29,7 @@ fun RecordFoodList(foodData: Map<String, List<Food>>, onFoodItemClicked: (Food) 
     // 安全初始化 selectedCategory
     var selectedCategory by remember {
         mutableStateOf(
-            if (foodData.isNotEmpty()) foodData.keys.first() else "Default Category"
+            if (foodData.isNotEmpty()) foodData.keys.first() else "主食"
         )
     }
     Row(modifier = Modifier.fillMaxSize()) {
@@ -50,7 +51,7 @@ fun RecordFoodList(foodData: Map<String, List<Food>>, onFoodItemClicked: (Food) 
                             selectedCategory = category
                         }
                         .padding(16.dp),
-                    color = if (category == selectedCategory) Color.Blue else Color.Black
+                    color = if (category == selectedCategory) Green else Color.Black
                 )
                 if (index < foodData.size - 1) { // 不要在最后一个元素后添加分隔线
                     HorizontalDivider(thickness = 1.dp, color = Color.LightGray)
