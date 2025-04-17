@@ -41,7 +41,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.hfut.mihealth.R
-import com.hfut.mihealth.common.foodRecord.ui.CameraPageScreen
+import com.hfut.mihealth.common.camera.ui.CameraPageScreen
 import com.hfut.mihealth.common.mainPage.ui.HomePageScreen
 import com.hfut.mihealth.common.mainPage.viewmodel.mainViewModelclass
 import com.hfut.mihealth.network.client.AuthInterceptor

@@ -1,10 +1,12 @@
 package com.hfut.mihealth.common.foodRecord
 
 import android.annotation.SuppressLint
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -48,23 +50,26 @@ import com.hfut.mihealth.common.foodRecord.ui.RecordDatePicker
 import com.hfut.mihealth.common.foodRecord.ui.RecordFoodList
 import com.hfut.mihealth.common.foodRecord.ui.RecordTopArea
 import com.hfut.mihealth.common.foodRecord.ui.SelectedFoodItem
+import com.hfut.mihealth.ui.theme.MiHealthTheme
 
 class RecordActivity : ComponentActivity() {
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            RecordScreen()
+            RecordScreen(intent.getStringExtra("meal") ?: "早餐")
         }
     }
 }
 
-@Preview
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun RecordScreen(viewModel: FoodViewModel = viewModel()) {
+fun RecordScreen(meal: String, viewModel: FoodViewModel = viewModel()) {
     val foodData by viewModel.foodData.collectAsState()
     val recordData by viewModel.foodCounts.collectAsState()
     val date by viewModel.date.collectAsState()
+    viewModel.updateMeals(meal)
     var showOverlay by remember { mutableStateOf(false) }
     var showFood by remember { mutableStateOf(false) }
     var showDate by remember { mutableStateOf(false) }

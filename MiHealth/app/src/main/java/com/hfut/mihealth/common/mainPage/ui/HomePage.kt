@@ -30,12 +30,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -165,7 +167,6 @@ fun MealRecord() {
             .fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        //todo 字体样式
         Column(
             modifier = Modifier
                 .padding(8.dp),
@@ -173,9 +174,11 @@ fun MealRecord() {
         ) {
             Text(
                 text = "今日还可摄入",
+                fontSize = 15.sp,
             )
 
             Row(
+                verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier
                     .padding(top = 15.dp)
             ) {
@@ -188,6 +191,9 @@ fun MealRecord() {
                 )
                 Text(
                     text = "千卡",
+                    color = Color.Black,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 20.sp
                 )
             }
         }
@@ -250,7 +256,9 @@ fun MealIcon(name: String, resource: Int) {
             .clickable { }
             .padding(8.dp)
             .clickable {
-                context.startActivity(Intent(context, RecordActivity::class.java))
+                val intent= Intent(context, RecordActivity::class.java)
+                intent.putExtra("meal", name)
+                context.startActivity(intent)
             },
         horizontalAlignment = androidx.compose.ui.Alignment.CenterHorizontally
     ) {

@@ -4,6 +4,7 @@ import android.app.Activity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -146,7 +147,10 @@ fun RecordTopArea(onOpen: () -> Unit, recordDate: Date, viewModel: FoodViewModel
             tags.forEachIndexed { index, tag ->
                 Box(
                     modifier = Modifier
-                        .clickable {
+                        .clickable(
+                            indication = null, // 禁用点击指示（即波纹效果）
+                            interactionSource = remember { MutableInteractionSource() }, // 提供一个空的交互源
+                        ) {
                             viewModel.updateMeals(tag)
                         }
                         .border(

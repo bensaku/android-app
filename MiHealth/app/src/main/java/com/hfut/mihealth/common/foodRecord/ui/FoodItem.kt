@@ -18,6 +18,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.hfut.mihealth.R
+import com.hfut.mihealth.customCompose.GlideImage
 import com.hfut.mihealth.network.data.Food
 
 @Composable
@@ -30,13 +31,17 @@ fun FoodItem(food: Food, onFoodItemClicked: (Food) -> Unit) {
         verticalAlignment = Alignment.CenterVertically
     ) {
         // 左侧图片
-        Image(
-            //todo 图片链接
-            painter = painterResource(R.drawable.launch),
-            contentDescription = "Food Image",
+        GlideImage(
+            food.imageurl,
             modifier = Modifier
                 .size(50.dp)
         )
+//        Image(
+//            painter = painterResource(R.drawable.launch),
+//            contentDescription = "Food Image",
+//            modifier = Modifier
+//                .size(50.dp)
+//        )
 
         Spacer(modifier = Modifier.width(16.dp)) // 图片与文字之间的间距
 

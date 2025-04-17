@@ -107,10 +107,6 @@ fun RecordDatePicker(onClose: () -> Unit, viewModel: FoodViewModel) {
                         viewModel.updateDate(selectedDate)
                     },
                     enabled = confirmEnabled.value,
-                    colors = ButtonDefaults.textButtonColors(
-                        //todo 颜色修改
-                        contentColor = Color.Blue // 更改这里为你想要的颜色
-                    )
                 ) {
                     Text("确定")
                 }

@@ -1,4 +1,4 @@
-package com.hfut.mihealth.common.foodRecord.ui
+package com.hfut.mihealth.common.camera.ui
 
 import android.app.Activity
 import android.graphics.Color
@@ -59,9 +59,7 @@ import com.google.accompanist.permissions.PermissionState
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
 import com.google.accompanist.permissions.shouldShowRationale
-import com.google.android.material.progressindicator.CircularProgressIndicator
 import com.hfut.mihealth.R
-import com.hfut.mihealth.common.camera.ui.CameraTopBar
 import com.hfut.mihealth.ui.theme.Green
 import com.hfut.mihealth.ui.theme.ThemeWhite
 import kotlinx.coroutines.delay
@@ -84,7 +82,8 @@ fun CameraPageScreen() {
         CameraContent()
     } else {
         //不接受
-        NoPermission(cameraPermissionState = cameraPermissionState)
+        CameraContent()
+        //NoPermission(cameraPermissionState = cameraPermissionState)
     }
 }
 

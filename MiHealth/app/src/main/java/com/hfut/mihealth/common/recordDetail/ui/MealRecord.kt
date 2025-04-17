@@ -26,16 +26,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.hfut.mihealth.R
-import com.hfut.mihealth.common.foodRecord.viewmodel.FoodCount
-import com.hfut.mihealth.network.data.Food
+import com.hfut.mihealth.network.data.RecordResponse
 import com.hfut.mihealth.ui.theme.Green
 
 @Composable
-@Preview
-fun MealRecord() {
+fun MealRecord(key: String, value: List<RecordResponse>) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -64,31 +61,17 @@ fun MealRecord() {
                     )
             ) {
             }
-            Text(text = "早餐")
+            Text(text = key)
 
         }
-        val foodCounts = listOf(
-            FoodCount(
-                food = Food(
-                    foodid = 1,
-                    name = "食物1",
-                    calories = 100,
-                    fat = 10.1,
-                    protein = 10.1,
-                    carbs = 10.2,
-                    foodtype = "主食",
-                    othernutritionalinfo = "主食",
-                    imageurl = "主食",
-                ),
-                count = 100
-            )
-        )
-        RecordItem(foodCounts[0])
+        value.forEach(){ it ->
+            RecordItem(it)
+        }
     }
 }
 
 @Composable
-fun RecordItem(foodCount: FoodCount) {
+fun RecordItem(foodCount: RecordResponse) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -111,20 +94,11 @@ fun RecordItem(foodCount: FoodCount) {
         Column(
             modifier = Modifier.weight(1f)
         ) {
-            Text(text = foodCount.food.name)
-            Text(text = "${foodCount.food.calories} 千卡/100克", color = Color.Gray)
+            Text(text = foodCount.name)
+            Text(text = "约${foodCount.amount} 克", color = Color.Gray)
         }
-        Text(text = "114千卡")
-        // 右侧添加图标
-        Icon(
-            painter = painterResource(R.drawable.change), // 请确保有相应的资源文件
-            contentDescription = "Add",
-            tint = Color.Unspecified,
-            modifier = Modifier
-                .padding(start = 5.dp)
-                .clickable { } // 点击事件处理
-                .size(24.dp)
+        Text(
+            text = "${foodCount.calories} 千卡",
         )
     }
-
 }

@@ -32,7 +32,7 @@ class FoodViewModel : ViewModel() {
 
     init {
         loadFoodData()
-        updateMealBasedOnTime()
+        //updateMealBasedOnTime()
     }
 
     private fun updateMealBasedOnTime() {
