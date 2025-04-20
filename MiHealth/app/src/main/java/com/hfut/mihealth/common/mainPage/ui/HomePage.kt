@@ -198,7 +198,6 @@ fun MealRecord() {
                 Text(
                     text = "千卡",
                     color = Color.Black,
-                    fontWeight = FontWeight.Bold,
                     fontSize = 20.sp
                 )
             }

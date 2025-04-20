@@ -158,7 +158,7 @@ fun RecordBottomArea(
                             .padding(bottom = 16.dp),
                         color = Green
                     )
-                    Text(text = "】、正在上传...", fontSize = 16.sp)
+                    Text(text = "正在上传...", fontSize = 16.sp)
                 }
             }
         }
