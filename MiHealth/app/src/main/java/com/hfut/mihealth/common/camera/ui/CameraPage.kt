@@ -60,6 +60,7 @@ import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
 import com.google.accompanist.permissions.shouldShowRationale
 import com.hfut.mihealth.R
+import com.hfut.mihealth.network.uploadImage
 import com.hfut.mihealth.ui.theme.Green
 import com.hfut.mihealth.ui.theme.ThemeWhite
 import kotlinx.coroutines.delay
@@ -147,8 +148,8 @@ private fun CameraContent() {
                             onClick = {
                                 showDialog = true
                                 // 模拟异步操作
-
                                 coroutineScope.launch {
+                                    uploadImage(picBitmap.value!!)
                                     delay(2000) // 模拟耗时操作
                                     picBitmap.value = null
                                     context?.onBackPressed()

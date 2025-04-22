@@ -1,6 +1,7 @@
 package com.hfut.mihealth.network
 
 import com.hfut.mihealth.network.data.Record
+import com.hfut.mihealth.network.data.RecordAndImageResponse
 import com.hfut.mihealth.network.data.RecordResponse
 import io.reactivex.Observable
 import retrofit2.http.Body
@@ -22,7 +23,5 @@ interface RecordService {
     @GET("records/diet")
     suspend fun getDietRecord(
         @Query("date") date: String
-    ): Map<String, List<RecordResponse>>
-    //Map<String, List<Map<String, Any>>>
-    //Map<String, List<RecordResponse>>
+    ): RecordAndImageResponse
 }
