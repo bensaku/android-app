@@ -56,7 +56,6 @@ fun FoodItem(food: Food, onFoodItemClicked: (Food) -> Unit) {
             contentDescription = "Add",
             tint = androidx.compose.ui.graphics.Color.Unspecified,
             modifier = Modifier
-                .clickable { } // 点击事件处理
                 .size(24.dp)
         )
     }

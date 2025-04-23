@@ -8,6 +8,7 @@ import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Query
+import java.time.LocalDate
 
 interface RecordService {
     @POST("records/addBatch")
@@ -24,4 +25,9 @@ interface RecordService {
     suspend fun getDietRecord(
         @Query("date") date: String
     ): RecordAndImageResponse
+
+    @GET("records/week")
+    suspend fun getWeekRecord(
+        @Query("date") date: String
+    ): Map<LocalDate, Map<String, Double>>
 }

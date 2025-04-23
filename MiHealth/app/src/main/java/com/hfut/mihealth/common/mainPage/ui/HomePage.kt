@@ -48,6 +48,7 @@ import com.hfut.mihealth.R
 import com.hfut.mihealth.common.foodRecord.RecordActivity
 import com.hfut.mihealth.SearchActivity
 import com.hfut.mihealth.common.recordDetail.DetailActivity
+import com.hfut.mihealth.common.weekReport.WeekActivity
 import com.hfut.mihealth.ui.theme.Green
 import com.hfut.mihealth.ui.theme.ThemeWhite
 
@@ -298,7 +299,7 @@ fun WeekRecord() {
                 indication = null,
                 interactionSource = remember { MutableInteractionSource() },
             ) {
-                context.startActivity(Intent(context, DetailActivity::class.java))
+                context.startActivity(Intent(context, WeekActivity::class.java))
             }
     ) {
         Image(
