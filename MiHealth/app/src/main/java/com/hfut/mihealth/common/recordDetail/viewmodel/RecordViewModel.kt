@@ -1,32 +1,76 @@
 package com.hfut.mihealth.common.recordDetail.viewmodel
 
+import android.os.Build
+import androidx.annotation.RequiresApi
+import androidx.compose.runtime.remember
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.gson.Gson
 import com.hfut.mihealth.network.RecordService
 import com.hfut.mihealth.network.client.RetrofitClient
+import com.hfut.mihealth.network.data.RecordAndImageResponse
 import com.hfut.mihealth.network.data.RecordResponse
+import com.kizitonwose.calendar.core.CalendarDay
+import com.kizitonwose.calendar.core.DayPosition
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.YearMonth
 import java.util.Calendar
 import java.util.Locale
 
 
+@RequiresApi(Build.VERSION_CODES.O)
 class RecordViewModel : ViewModel() {
-    private val _recordData = MutableStateFlow<Map<String, List<RecordResponse>>>(emptyMap())
-    val recordData: StateFlow<Map<String, List<RecordResponse>>> get() = _recordData
+    private val _recordData = MutableStateFlow<RecordAndImageResponse>(
+        RecordAndImageResponse(
+            record = emptyMap(),
+            image = emptyList()
+        )
+    )
+    val recordData: StateFlow<RecordAndImageResponse> get() = _recordData
 
     private val _total = MutableStateFlow<total>(total(0, 0.0, 0.0, 0.0))
     val total: StateFlow<total> get() = _total
 
 
     private var date = getCurrentDate()
+    private val _selectedDay = MutableStateFlow<CalendarDay?>(null)
+    val selectedDay: StateFlow<CalendarDay?> get() = _selectedDay
+
+    private val _currentMonth = MutableStateFlow<YearMonth>(YearMonth.now())
+    val currentMonth: StateFlow<YearMonth> get() = _currentMonth
+
+    fun updateSelectedDay(day: CalendarDay) {
+        _selectedDay.value = day
+    }
+
 
     init {
+        // 获取今天的日期
+        val today = LocalDate.now()
+        // 创建一个 CalendarDay 对象代表今天的日期
+        val initialDay = CalendarDay(today, DayPosition.MonthDate)
+        // 设置初始选中的日期
+        _selectedDay.value = initialDay
         refresh()
     }
+
+    fun resetState() {
+        // 获取今天的日期
+        val today = LocalDate.now()
+        // 创建一个 CalendarDay 对象代表今天的日期
+        val initialDay = CalendarDay(today, DayPosition.MonthDate)
+        // 设置初始选中的日期
+        _selectedDay.value = initialDay
+        _currentMonth.value = YearMonth.now()
+        date = getCurrentDate()
+        refresh()
+    }
+
 
     private fun refresh() {
         viewModelScope.launch(Dispatchers.IO) {
@@ -53,7 +97,7 @@ class RecordViewModel : ViewModel() {
     }
 
     private fun countTotal() {
-        val records = _recordData.value.values.flatten()
+        val records = _recordData.value.record!!.values.flatten()
         val newTotal = total(
             totalCalories = records.sumOf { it.calories },
             totalCarbohydrates = records.sumOf { it.carbs },

@@ -11,8 +11,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -21,6 +21,9 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.LocalLifecycleOwner
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.hfut.mihealth.R
 import com.hfut.mihealth.common.recordDetail.viewmodel.RecordViewModel
@@ -67,6 +70,14 @@ fun DetailScreen() {
 fun RecordArea(viewModel: RecordViewModel = viewModel()) {
     val recordData by viewModel.recordData.collectAsState()
     val total by viewModel.total.collectAsState()
+    // 或者更精确地监听生命周期事件
+    val lifecycleOwner = LocalLifecycleOwner.current
+    LaunchedEffect(lifecycleOwner) {
+        lifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+            // 当页面可见时执行的操作
+            viewModel.resetState()
+        }
+    }
     Column {
         RecordDate(viewModel)
         OneDayRecordCard(
@@ -76,9 +87,18 @@ fun RecordArea(viewModel: RecordViewModel = viewModel()) {
             "%.2f".format(total.totalCarbohydrates)
         )
         LazyColumn {
-            items(recordData.size) { index ->
-                val (mealType, records) = recordData.toList().elementAt(index)
-                MealRecord(mealType, records)
+            recordData.record?.let {
+                items(it.size) { index ->
+                    val (mealType, records) = recordData.record!!.toList().elementAt(index)
+                    MealRecord(mealType, records)
+                }
+            }
+            recordData.image?.let {
+                if (recordData.image!!.size > 0){
+                    item {
+                        AIRecord(recordData.image!!)
+                    }
+                }
             }
         }
     }

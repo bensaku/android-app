@@ -1,9 +1,7 @@
 package com.hfut.mihealth.common.recordDetail.ui
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -18,22 +16,20 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.hfut.mihealth.R
+import androidx.compose.ui.unit.sp
 import com.hfut.mihealth.customCompose.GlideImage
-import com.hfut.mihealth.network.data.RecordResponse
+import com.hfut.mihealth.network.data.Image
 import com.hfut.mihealth.ui.theme.Green
 
 @Composable
-fun MealRecord(key: String, value: List<RecordResponse>) {
+fun AIRecord(image: List<Image>) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -50,7 +46,6 @@ fun MealRecord(key: String, value: List<RecordResponse>) {
                 .padding(horizontal = 20.dp)
                 .padding(top = 10.dp)
         ) {
-
             Box(
                 modifier = Modifier
                     .padding(end = 10.dp)
@@ -62,17 +57,17 @@ fun MealRecord(key: String, value: List<RecordResponse>) {
                     )
             ) {
             }
-            Text(text = key)
-
+            Text(text = "AI分析结果")
         }
-        value.forEach(){ it ->
-            RecordItem(it)
+        image.forEach { it ->
+            AIRecordItem(it)
         }
     }
+
 }
 
 @Composable
-fun RecordItem(foodCount: RecordResponse) {
+fun AIRecordItem(image: Image) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -81,24 +76,39 @@ fun RecordItem(foodCount: RecordResponse) {
     ) {
         // 左侧图片
         GlideImage(
-            url = foodCount.imageurl,
+            url = "http://192.168.1.102:8000/images/" + image.timestamp + "_" + image.userId + ".jpg",
             modifier = Modifier
-                .size(35.dp)
-                .clip(CircleShape)
+                .size(45.dp)
+                .clip(RoundedCornerShape(5.dp))
 
         )
 
         Spacer(modifier = Modifier.width(16.dp)) // 图片与文字之间的间距
+        if (image.completed){
+            Column(
+                modifier = Modifier.weight(1f)
+            ) {
+                Text(text = image.foodName!!,
+                    fontSize = 20.sp)
 
-        // 中间两行文字
-        Column(
-            modifier = Modifier.weight(1f)
-        ) {
-            Text(text = foodCount.name)
-            Text(text = "约 ${foodCount.amount} 克", color = Color.Gray)
+            }
         }
-        Text(
-            text = "${foodCount.calories} 千卡",
-        )
+        else{
+            Text(
+                text = "AI正在识别中",
+            )
+        }
+        Text(text = "约 ${image.amount} 克", color = Color.Gray)
+//
+//        // 中间两行文字
+//        Column(
+//            modifier = Modifier.weight(1f)
+//        ) {
+//            Text(text = image.)
+//            Text(text = "约${foodCount.amount} 克", color = Color.Gray)
+//        }
+//        Text(
+//            text = "${foodCount.calories} 千卡",
+//        )
     }
 }

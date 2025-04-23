@@ -1,6 +1,10 @@
 package com.hfut.mihealth.network.data
 
+import com.google.gson.annotations.SerializedName
+
 data class RecordAndImageResponse (
-    val record:Map<String, List<RecordResponse>>,
-    val image:List<Image>
+    @SerializedName("record")
+    var record:Map<String, List<RecordResponse>>?,
+    @SerializedName("image")
+    var image:List<Image>?
     )

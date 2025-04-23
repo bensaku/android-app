@@ -46,7 +46,6 @@ import com.hfut.mihealth.R
 import com.hfut.mihealth.common.camera.ui.CameraPageScreen
 import com.hfut.mihealth.common.mainPage.ui.HomePageScreen
 import com.hfut.mihealth.common.mainPage.viewmodel.mainViewModelclass
-import com.hfut.mihealth.common.recordDetail.ui.DetailScreen
 import com.hfut.mihealth.common.recordDetail.ui.RecordArea
 import com.hfut.mihealth.network.client.AuthInterceptor
 import com.hfut.mihealth.ui.theme.Green

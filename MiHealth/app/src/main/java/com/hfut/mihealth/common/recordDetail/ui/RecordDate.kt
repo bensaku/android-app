@@ -17,6 +17,9 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -45,16 +48,20 @@ import kotlinx.coroutines.launch
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.YearMonth
+import java.util.Date
 
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun RecordDate(viewModel: RecordViewModel) {
 
-    val currentMonth = remember { YearMonth.now() }
-    val startMonth = remember { currentMonth.minusMonths(100) } // Adjust as needed
-    val endMonth = remember { currentMonth.plusMonths(100) } // Adjust as needed
+    val currentMonth by viewModel.currentMonth.collectAsState()
+    // 明确声明依赖于 currentMonth
+    val startMonth = remember(currentMonth) { currentMonth.minusMonths(100) }
+    val endMonth = remember(currentMonth) { currentMonth.plusMonths(100) }
+
     val daysOfWeek = remember { daysOfWeek() }
+
     val state = rememberCalendarState(
         startMonth = startMonth,
         endMonth = endMonth,
@@ -65,7 +72,7 @@ fun RecordDate(viewModel: RecordViewModel) {
         modifier = Modifier
             .padding(10.dp)
     ) {
-        val selectedDay = remember { mutableStateOf<CalendarDay?>(CalendarDay(LocalDate.now(),DayPosition.MonthDate)) }
+        val selectedDay by viewModel.selectedDay.collectAsState()
         val coroutineScope = rememberCoroutineScope()
         SimpleCalendarTitle(
             modifier = Modifier.padding(horizontal = 8.dp),
@@ -114,8 +121,8 @@ fun RecordDate(viewModel: RecordViewModel) {
             },
             state = state,
             dayContent = { day ->
-                Day(day, isSelected = day == selectedDay.value) {
-                    selectedDay.value = day
+                Day(day, isSelected = day == selectedDay) {
+                    viewModel.updateSelectedDay(day)
                     viewModel.updateDate(day.date.toString())
                 }
             },

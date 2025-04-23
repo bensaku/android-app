@@ -4,10 +4,10 @@ import java.util.Date
 
 data class Image(
     val imageId: Int,
+    val userId: Int,
     val timestamp: Long,
-    val foodName: String,
-    val amount: Int,
-    val userid: Int,
+    val date: Date,
+    val amount: Int?,
+    val foodName: String?,
     val completed: Boolean,
-    val date:Date
-)
+    )
