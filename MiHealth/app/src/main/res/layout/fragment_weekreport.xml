@@ -1,14 +1,109 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:background="@drawable/background">
+
+    <!-- Toolbar -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/topAppBar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginTop="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navigationIcon="@drawable/left_arrow"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+        <!-- 自定义标题 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="上周周报统计"
+            android:textSize="20sp" />
+    </androidx.appcompat.widget.Toolbar>
+
+    <!--    <TextView-->
+    <!--        android:id="@+id/title"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:text="热量统计"-->
+    <!--        android:textColor="@android:color/black"-->
+    <!--        android:textSize="24sp"-->
+    <!--        android:textStyle="bold"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@id/topAppBar"-->
+    <!--        tools:ignore="MissingConstraints" />-->
+
+    <LinearLayout
+        android:id="@+id/bar_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:padding="10dp"
+        android:background="@drawable/rounded_background"
+        app:layout_constraintTop_toBottomOf="@id/topAppBar">
+
+        <com.github.mikephil.charting.charts.BarChart
+            android:id="@+id/bar_chart"
+            android:layout_width="match_parent"
+            android:layout_height="250dp" />
+    </LinearLayout>
 
 
-<com.github.mikephil.charting.charts.LineChart
-    android:id="@+id/line_chart"
-    android:layout_width="match_parent"
-    android:layout_height="400dp"
-    app:layout_constraintTop_toTopOf="parent"/>
+    <LinearLayout
+        android:id="@+id/pie_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:background="@drawable/rounded_background"
+        android:padding="10dp"
+        app:layout_constraintTop_toBottomOf="@id/bar_ll">
+
+        <com.github.mikephil.charting.charts.PieChart
+            android:id="@+id/pie_chart"
+            android:layout_width="0dp"
+            android:layout_height="150dp"
+            android:layout_weight="1" />
+
+        <include
+            layout="@layout/pie_card"
+            android:layout_width="0dp"
+            android:layout_height="150dp"
+            android:layout_weight="1" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:background="@drawable/rounded_background"
+        android:orientation="vertical"
+        android:padding="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pie_ll">
+
+        <TextView
+            android:id="@+id/week_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="AI周报" />
+
+        <TextView
+            android:id="@+id/week_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="这是AI周报的内容。" />
+
+    </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

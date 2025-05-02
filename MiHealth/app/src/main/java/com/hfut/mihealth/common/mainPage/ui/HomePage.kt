@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.animateContentSize
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -12,6 +13,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -60,14 +62,12 @@ fun HomePageScreen(navPos: NavHostController) {
         modifier = Modifier
             .padding(horizontal = 10.dp)
     ) {
+        Spacer(modifier = Modifier.height(8.dp))
         FoodSearchBar()
+        Spacer(modifier = Modifier.height(8.dp))
         RecordCard(navPos)
+        Spacer(modifier = Modifier.height(8.dp))
         WeekRecord()
-//        LazyColumn {
-//            items(items) { item ->
-//                FoodCard()
-//            }
-//        }
     }
 
 }
@@ -127,6 +127,7 @@ fun RecordCard(navPos: NavHostController) {
         color = ThemeWhite,
         shape = MaterialTheme.shapes.medium,
         tonalElevation = 5.dp,
+        border = BorderStroke(1.dp,Color.LightGray),
         modifier = Modifier
             .padding(all = 8.dp)
             .fillMaxWidth()
@@ -151,11 +152,11 @@ fun RecordCard(navPos: NavHostController) {
                     text = "饮食记录",
                     style = MaterialTheme.typography.titleLarge
                 )
-                Text(
-                    text = "查看详情",
-                    modifier = Modifier
-                        .padding(start = 10.dp),
-                )
+//                Text(
+//                    text = "查看详情",
+//                    modifier = Modifier
+//                        .padding(start = 10.dp),
+//                )
             }
             MealRecord()
             MealBar()
@@ -180,7 +181,7 @@ fun MealRecord() {
             horizontalAlignment = androidx.compose.ui.Alignment.CenterHorizontally
         ) {
             Text(
-                text = "今日还可摄入",
+                text = "今日已摄入",
                 fontSize = 15.sp,
             )
 
@@ -291,10 +292,11 @@ fun WeekRecord() {
         color = Color(0x86ffffff),
         shape = MaterialTheme.shapes.medium,
         tonalElevation = 5.dp,
+        border = BorderStroke(1.dp, Color.LightGray),
         modifier = Modifier
             .padding(all = 8.dp)
             .fillMaxWidth()
-            .height(350.dp)
+            .height(240.dp)
             .clickable(
                 indication = null,
                 interactionSource = remember { MutableInteractionSource() },
@@ -303,12 +305,12 @@ fun WeekRecord() {
             }
     ) {
         Image(
-            painter = painterResource(R.drawable.zhoubao),
+            painter = painterResource(R.drawable.weekreport),
             contentDescription = "周报表",
+            contentScale = androidx.compose.ui.layout.ContentScale.Crop,
             modifier = Modifier
-                .fillMaxWidth()
+                .fillMaxSize()
         )
-
     }
 }
 

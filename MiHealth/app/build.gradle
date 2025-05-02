@@ -84,7 +84,7 @@ dependencies {
     // Retrofit 库
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     // 使用Gson进行JSON转换
-    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
     // 如果需要处理异步请求或与Kotlin协程结合使用，可以加入以下依赖
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.9.0' // 使用RxJava
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.1' // RxAndroid for RxJava2

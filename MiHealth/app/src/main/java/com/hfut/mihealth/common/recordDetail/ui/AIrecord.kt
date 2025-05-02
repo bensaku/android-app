@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -84,31 +83,22 @@ fun AIRecordItem(image: Image) {
         )
 
         Spacer(modifier = Modifier.width(16.dp)) // 图片与文字之间的间距
-        if (image.completed){
+        if (image.completed) {
             Column(
                 modifier = Modifier.weight(1f)
             ) {
-                Text(text = image.foodName!!,
-                    fontSize = 20.sp)
+                Text(
+                    text = image.foodName!!,
+                    fontSize = 20.sp
+                )
 
             }
-        }
-        else{
+            Text(text = "约 ${image.amount} 克", color = Color.Gray)
+        } else {
             Text(
                 text = "AI正在识别中",
             )
         }
-        Text(text = "约 ${image.amount} 克", color = Color.Gray)
-//
-//        // 中间两行文字
-//        Column(
-//            modifier = Modifier.weight(1f)
-//        ) {
-//            Text(text = image.)
-//            Text(text = "约${foodCount.amount} 克", color = Color.Gray)
-//        }
-//        Text(
-//            text = "${foodCount.calories} 千卡",
-//        )
+
     }
 }

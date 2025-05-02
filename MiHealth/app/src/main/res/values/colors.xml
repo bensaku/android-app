@@ -9,4 +9,8 @@
     <color name="white">#FFFFFFFF</color>
     <color name="gray">#22808080</color>
     <color name="light_gray">#22F5F5F5</color>
+    <color name="green">#FF96E8BA</color>
+    <color name="CarbsYellow">#FFFFEB3B</color>
+    <color name="FatOrange">#FFFF5722</color>
+    <color name="ProteinGreen">#FF8BC34A</color>
 </resources>

@@ -3,12 +3,12 @@ package com.hfut.mihealth.network
 import com.hfut.mihealth.network.data.Record
 import com.hfut.mihealth.network.data.RecordAndImageResponse
 import com.hfut.mihealth.network.data.RecordResponse
+import com.hfut.mihealth.network.data.WeekReportResponse
 import io.reactivex.Observable
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Query
-import java.time.LocalDate
 
 interface RecordService {
     @POST("records/addBatch")
@@ -18,7 +18,7 @@ interface RecordService {
     @GET("records/diet")
     fun getDietRecord_Rx(
         @Query("date") date: String
-    ): Observable<List<Map<String, List<RecordResponse>>>>
+    ): Observable<RecordAndImageResponse>
 
     //协程
     @GET("records/diet")
@@ -27,7 +27,22 @@ interface RecordService {
     ): RecordAndImageResponse
 
     @GET("records/week")
+    fun getWeekRecord_Rx(
+        @Query("date") date: String
+    ): Observable<Map<String, Map<String, Double>>>
+
+    @GET("records/week")
     suspend fun getWeekRecord(
         @Query("date") date: String
-    ): Map<LocalDate, Map<String, Double>>
+    ): Map<String, Map<String, Double>>
+
+    @GET("records/weekReport")
+    fun getWeekReport_Rx(
+        @Query("date") date: String
+    ): Observable<WeekReportResponse>
+
+    @GET("records/weekReport")
+    suspend fun getWeekReport(
+        @Query("date") date: String
+    ): WeekReportResponse
 }

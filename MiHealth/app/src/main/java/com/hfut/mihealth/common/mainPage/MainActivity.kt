@@ -36,6 +36,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
@@ -160,8 +161,9 @@ fun MinePageScreen() {
 fun BottomNavigationBar(items: List<BottomItemDate>, navPos: NavHostController) {
     var selectedItem by remember { mutableIntStateOf(0) }
     NavigationBar(
-        modifier = Modifier.fillMaxWidth(1f),
-        containerColor = ThemeWhite
+        modifier = Modifier.fillMaxWidth(1f)
+            .padding(bottom = 5.dp),
+        containerColor = Color.LightGray.copy(alpha = 0.2f)
     ) {
         items.forEachIndexed { index, s ->
             NavigationBarItem(
