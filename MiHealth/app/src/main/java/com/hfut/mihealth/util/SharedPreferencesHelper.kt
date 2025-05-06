@@ -7,10 +7,10 @@ class SharedPreferencesHelper(context: Context) {
     private val prefs = context.getSharedPreferences("user_prefs", Context.MODE_PRIVATE)
 
     // 保存Token和UserId
-    fun saveTokenAndUserId(token: String, userId: Int) {
+    fun saveTokenAndUserId(token: String, userName: String) {
         prefs.edit().apply {
             putString("user_token", token)
-            putInt("user_id", userId)
+            putString("user_name", userName)
             apply()
         }
     }
@@ -18,14 +18,14 @@ class SharedPreferencesHelper(context: Context) {
     // 获取Token
     fun getToken(): String? = prefs.getString("user_token", null)
 
-    // 获取UserId
-    fun getUserId(): Int = prefs.getInt("user_id", -1)
+    // 获取UserName
+    fun getUserName(): String? = prefs.getString("user_name", null)
 
-    // 清除Token和UserId
+    // 清除Token和User
     fun clearTokenAndUserId() {
         prefs.edit().apply {
             remove("user_token")
-            remove("user_id")
+            remove("user_name")
             apply()
         }
     }

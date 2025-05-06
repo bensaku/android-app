@@ -29,7 +29,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.hfut.mihealth.common.foodRecord.viewmodel.FoodViewModel
-import com.hfut.mihealth.network.data.Food
+import com.hfut.mihealth.network.DTO.Food
 import com.hfut.mihealth.ui.theme.CarbsYellow
 import com.hfut.mihealth.ui.theme.FatOrange
 import com.hfut.mihealth.ui.theme.Green

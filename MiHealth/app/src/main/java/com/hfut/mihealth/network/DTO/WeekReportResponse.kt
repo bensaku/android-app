@@ -1,4 +1,4 @@
-package com.hfut.mihealth.network.data
+package com.hfut.mihealth.network.DTO
 
 data class WeekReportResponse(
     val reportContent: String,

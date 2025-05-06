@@ -1,9 +1,8 @@
 package com.hfut.mihealth.network
 
-import com.hfut.mihealth.network.data.Record
-import com.hfut.mihealth.network.data.RecordAndImageResponse
-import com.hfut.mihealth.network.data.RecordResponse
-import com.hfut.mihealth.network.data.WeekReportResponse
+import com.hfut.mihealth.network.DTO.Record
+import com.hfut.mihealth.network.DTO.RecordAndImageResponse
+import com.hfut.mihealth.network.DTO.WeekReportResponse
 import io.reactivex.Observable
 import retrofit2.http.Body
 import retrofit2.http.GET

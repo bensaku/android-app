@@ -1,6 +1,6 @@
 package com.hfut.mihealth.network.javaData;
 
-import com.hfut.mihealth.network.data.Image;
+import com.hfut.mihealth.network.DTO.Image;
 
 import java.util.List;
 import java.util.Map;

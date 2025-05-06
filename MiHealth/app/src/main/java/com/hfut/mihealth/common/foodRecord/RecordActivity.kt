@@ -40,7 +40,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.hfut.mihealth.network.data.Food
+import com.hfut.mihealth.network.DTO.Food
 import com.hfut.mihealth.common.foodRecord.viewmodel.FoodCount
 import com.hfut.mihealth.common.foodRecord.ui.FoodSelect
 import com.hfut.mihealth.common.foodRecord.ui.RecordBottomArea

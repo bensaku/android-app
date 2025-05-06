@@ -7,7 +7,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="本周饮食摄入结构：" />
+        android:text="上周饮食摄入结构：" />
     <include
         android:id="@+id/pie_item_1"
         layout="@layout/pie_item"

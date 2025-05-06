@@ -1,6 +1,5 @@
 package com.hfut.mihealth.common.foodRecord.ui
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -21,7 +20,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.hfut.mihealth.R
 import com.hfut.mihealth.customCompose.GlideImage
-import com.hfut.mihealth.network.data.Food
+import com.hfut.mihealth.network.DTO.Food
 
 @Composable
 fun FoodItem(food: Food, onFoodItemClicked: (Food) -> Unit) {

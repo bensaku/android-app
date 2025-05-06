@@ -88,8 +88,8 @@ fun FoodSearchBar() {
             .fillMaxWidth()
             .height(40.dp)
             .clickable {
-                val intent = Intent(context, SearchActivity::class.java)
-                context.startActivity(intent)
+//                val intent = Intent(context, SearchActivity::class.java)
+//                context.startActivity(intent)
             }
     ) {
         TextField(
@@ -230,7 +230,7 @@ fun Macronutrients(str: String) {
                 .width(50.dp),
         )
         Text(
-            text = "55/60克"
+            text = "55克"
         )
 
     }

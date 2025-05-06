@@ -2,14 +2,11 @@ package com.hfut.mihealth.common.recordDetail.viewmodel
 
 import android.os.Build
 import androidx.annotation.RequiresApi
-import androidx.compose.runtime.remember
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.google.gson.Gson
 import com.hfut.mihealth.network.RecordService
 import com.hfut.mihealth.network.client.RetrofitClient
-import com.hfut.mihealth.network.data.RecordAndImageResponse
-import com.hfut.mihealth.network.data.RecordResponse
+import com.hfut.mihealth.network.DTO.RecordAndImageResponse
 import com.kizitonwose.calendar.core.CalendarDay
 import com.kizitonwose.calendar.core.DayPosition
 import kotlinx.coroutines.Dispatchers

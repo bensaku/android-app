@@ -1,6 +1,6 @@
 package com.hfut.mihealth.network
 
-import com.hfut.mihealth.network.data.Food
+import com.hfut.mihealth.network.DTO.Food
 import io.reactivex.Observable
 import retrofit2.http.GET
 

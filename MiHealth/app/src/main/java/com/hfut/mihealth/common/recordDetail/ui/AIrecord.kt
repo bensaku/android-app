@@ -24,7 +24,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.hfut.mihealth.customCompose.GlideImage
-import com.hfut.mihealth.network.data.Image
+import com.hfut.mihealth.network.DTO.Image
 import com.hfut.mihealth.ui.theme.Green
 
 @Composable

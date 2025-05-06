@@ -5,8 +5,8 @@ import androidx.lifecycle.viewModelScope
 import com.hfut.mihealth.common.recordDetail.viewmodel.total
 import com.hfut.mihealth.network.FoodService
 import com.hfut.mihealth.network.client.RetrofitClient
-import com.hfut.mihealth.network.data.Food
-import com.hfut.mihealth.network.data.Record
+import com.hfut.mihealth.network.DTO.Food
+import com.hfut.mihealth.network.DTO.Record
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -109,7 +109,7 @@ class FoodViewModel : ViewModel() {
     private fun createRecord(date: Date, meals: String, foodCounts: List<FoodCount>): MutableList<Record> {
         val recordList = mutableListOf<Record>()
         foodCounts.forEach { foodCount ->
-            val record = com.hfut.mihealth.network.data.Record(
+            val record = com.hfut.mihealth.network.DTO.Record(
                 recordid = null,
                 foodid = foodCount.food.foodid,
                 userid = null,

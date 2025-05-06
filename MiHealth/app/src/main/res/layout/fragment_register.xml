@@ -1,8 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:paddingHorizontal="16dp"
+    android:background="@drawable/background">
+
+    <LinearLayout
+        android:id="@+id/back_to_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/title_text"
+        app:layout_constraintTop_toTopOf="parent" >
+
+        <!-- 返回图标 -->
+        <View
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/left_arrow" />
+
+        <!-- 返回文字 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="返回登录"
+            android:textSize="18sp"
+            android:textColor="@color/black"
+            android:layout_marginStart="5dp"/>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/title_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="注册"
+        android:textSize="24sp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="32dp"/>
+
+    <!-- 用户名输入框 -->
+    <EditText
+        android:id="@+id/username_input"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="用户名"
+        android:inputType="text"
+        android:autofillHints="username"
+        android:textSize="16sp"
+        android:padding="12dp"
+        android:background="@drawable/edittext_rounded"
+        app:layout_constraintTop_toBottomOf="@id/title_text"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="40dp"/>
 
     <!-- 电话号码输入框 -->
     <EditText
@@ -12,13 +74,13 @@
         android:hint="电话号码"
         android:inputType="phone"
         android:autofillHints="telephoneNumber"
-        app:layout_constraintTop_toTopOf="parent"
+        android:textSize="16sp"
+        android:padding="12dp"
+        android:background="@drawable/edittext_rounded"
+        app:layout_constraintTop_toBottomOf="@id/username_input"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        android:layout_marginTop="50dp"
-        android:padding="16dp"
-        android:backgroundTint="@color/purple_500"/>
+        android:layout_marginTop="20dp"/>
 
     <!-- 密码输入框 -->
     <EditText
@@ -27,33 +89,48 @@
         android:layout_height="wrap_content"
         android:hint="密码"
         android:inputType="textPassword"
+        android:textSize="16sp"
+        android:padding="12dp"
+        android:background="@drawable/edittext_rounded"
         app:layout_constraintTop_toBottomOf="@id/phone_input"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        android:layout_marginTop="20dp"
-        android:padding="16dp"
-        android:backgroundTint="@color/purple_500"/>
+        android:layout_marginTop="20dp"/>
 
-    <!-- 注册按钮 -->
+    <!-- 取消按钮 -->
     <Button
         android:id="@+id/cancel_button"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="取消"
+        android:textSize="16sp"
+        android:paddingVertical="12dp"
+        android:backgroundTint="@color/gray"
+        android:textColor="@color/white"
         app:layout_constraintTop_toBottomOf="@id/password_input"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/register_button"
-        android:layout_marginTop="40dp"/>
+        app:layout_constraintHorizontal_weight="1"
+        android:layout_marginTop="40dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="8dp"/>
 
+    <!-- 注册按钮 -->
     <Button
         android:id="@+id/register_button"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="注册"
-        app:layout_constraintStart_toEndOf="@id/cancel_button"
+        android:textSize="16sp"
+        android:paddingVertical="12dp"
+        android:backgroundTint="@color/green"
+        android:textColor="@color/white"
         app:layout_constraintTop_toBottomOf="@id/password_input"
+        app:layout_constraintStart_toEndOf="@id/cancel_button"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="40dp"/>
+        app:layout_constraintHorizontal_weight="1"
+        android:layout_marginTop="40dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="16dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

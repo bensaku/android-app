@@ -11,6 +11,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+        android:name=".common.MyApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -21,6 +22,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MiHealth"
         tools:targetApi="31">
+        <activity
+            android:name=".common.login.LoginActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
         <activity
             android:name=".common.weekReport.WeekActivity"
             android:exported="false" />

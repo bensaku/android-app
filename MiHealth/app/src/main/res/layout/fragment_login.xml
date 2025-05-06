@@ -1,6 +1,116 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:paddingHorizontal="16dp"
+    android:background="@drawable/background">
+
+    <!-- 返回按钮 -->
+    <View
+        android:id="@+id/login_back_button"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="36dp"
+        android:background="@drawable/left_arrow"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- 标题 -->
+    <TextView
+        android:id="@+id/title_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="登陆"
+        android:textSize="24sp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="32dp"/>
+
+    <!-- 电话号码输入框 -->
+    <EditText
+        android:id="@+id/login_phone_input"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="电话号码"
+        android:inputType="phone"
+        android:autofillHints="username"
+        android:textSize="16sp"
+        android:padding="12dp"
+        android:background="@drawable/edittext_rounded"
+        app:layout_constraintTop_toBottomOf="@id/title_login"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="60dp"/>
+
+    <!-- 密码输入框 -->
+    <EditText
+        android:id="@+id/login_password_input"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="密码"
+        android:inputType="textPassword"
+        android:textSize="16sp"
+        android:padding="12dp"
+        android:background="@drawable/edittext_rounded"
+        app:layout_constraintTop_toBottomOf="@id/login_phone_input"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="20dp"/>
+
+    <!-- 登录和取消按钮 -->
+    <Button
+        android:id="@+id/cancel_button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="取消"
+        android:textSize="16sp"
+        android:paddingVertical="12dp"
+        android:backgroundTint="@color/gray"
+        android:textColor="@color/white"
+        app:layout_constraintTop_toBottomOf="@id/goto_register_text"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/register_button"
+        app:layout_constraintHorizontal_weight="1"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="8dp"/>
+
+    <Button
+        android:id="@+id/register_button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="登陆"
+        android:textSize="16sp"
+        android:paddingVertical="12dp"
+        android:backgroundTint="@color/green"
+        android:textColor="@color/white"
+        app:layout_constraintTop_toBottomOf="@id/goto_register_text"
+        app:layout_constraintStart_toEndOf="@id/cancel_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_weight="1"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="16dp"/>
+
+    <!-- 跳转注册区域 -->
+    <TextView
+        android:id="@+id/goto_register_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="没有账号？立即注册"
+        android:textSize="16sp"
+        android:textColor="@color/purple_500"
+        android:layout_marginTop="14dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:padding="8dp"
+        app:layout_constraintTop_toBottomOf="@id/login_password_input"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

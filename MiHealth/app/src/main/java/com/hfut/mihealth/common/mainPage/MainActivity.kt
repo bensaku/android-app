@@ -1,5 +1,6 @@
 package com.hfut.mihealth.common.mainPage
 
+import MinePageScreen
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
@@ -13,7 +14,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -44,13 +44,13 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.hfut.mihealth.R
+import com.hfut.mihealth.common.MyApplication
 import com.hfut.mihealth.common.camera.ui.CameraPageScreen
 import com.hfut.mihealth.common.mainPage.ui.HomePageScreen
-import com.hfut.mihealth.common.mainPage.viewmodel.mainViewModelclass
+import com.hfut.mihealth.common.mainPage.viewmodel.MainViewModel
 import com.hfut.mihealth.common.recordDetail.ui.RecordArea
 import com.hfut.mihealth.network.client.AuthInterceptor
 import com.hfut.mihealth.ui.theme.Green
-import com.hfut.mihealth.ui.theme.ThemeWhite
 import com.hfut.mihealth.util.SharedPreferencesHelper
 
 class MainActivity : ComponentActivity() {
@@ -64,9 +64,10 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-private suspend fun initToken(context: Context, viewModel: mainViewModelclass) {
+private suspend fun initToken(context: Context, viewModel: MainViewModel) {
     val sharedPreferences = SharedPreferencesHelper(context)
     val savedToken = sharedPreferences.getToken()
+    viewModel.loadUser()
     if (!savedToken.isNullOrBlank()) {
         // 如果有token，直接进入主界面
         AuthInterceptor.setToken(savedToken)
@@ -78,16 +79,17 @@ private suspend fun initToken(context: Context, viewModel: mainViewModelclass) {
 @RequiresApi(Build.VERSION_CODES.O)
 @Preview
 @Composable
-fun MainScreen(viewModel: mainViewModelclass = viewModel()) {
-    // 在这里调用 initToken 方法
+fun MainScreen() {
     val context = LocalContext.current
+    val app = context.applicationContext as MyApplication
+    val viewModel = app.getAppViewModel()
+    // 在这里调用 initToken 方法
     LaunchedEffect(Unit) {
         initToken(context, viewModel)
     }
     val navItems = listOf(
         BottomItemDate("HomePage", "主页", R.drawable.homepage_icon),
         BottomItemDate("record", "记录", R.drawable.record_icon),
-//        BottomItemDate("camera", "拍照", R.drawable.mine_icon),
         BottomItemDate("mine", "我的", R.drawable.mine_icon)
     )
     val navPos = rememberNavController()
@@ -125,7 +127,7 @@ fun MainScreen(viewModel: mainViewModelclass = viewModel()) {
                     RecordArea()
                 }
                 composable("mine") {
-                    MinePageScreen()
+                    MinePageScreen(viewModel)
                 }
                 composable("camera") {
                     CameraPageScreen()
@@ -146,16 +148,7 @@ fun AppContent(item: String) {
     }
 }
 
-@Composable
-fun MinePageScreen() {
-    Image(
-        painter = painterResource(R.drawable.minebackground),
-        contentDescription = null,
-        contentScale = ContentScale.FillBounds,
-        modifier = Modifier
-            .fillMaxSize(),
-    )
-}
+
 
 @Composable
 fun BottomNavigationBar(items: List<BottomItemDate>, navPos: NavHostController) {

@@ -1,4 +1,4 @@
-package com.hfut.mihealth.network.data
+package com.hfut.mihealth.network.DTO
 
 import com.google.gson.annotations.SerializedName
 
