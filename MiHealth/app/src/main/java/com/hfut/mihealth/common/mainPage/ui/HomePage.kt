@@ -21,6 +21,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LinearProgressIndicator
@@ -62,14 +63,47 @@ fun HomePageScreen(navPos: NavHostController) {
         modifier = Modifier
             .padding(horizontal = 10.dp)
     ) {
-        Spacer(modifier = Modifier.height(8.dp))
-        FoodSearchBar()
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(12.dp))
+        //FoodSearchBar()
+        TitleBar()
+        Spacer(modifier = Modifier.height(12.dp))
         RecordCard(navPos)
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(12.dp))
         WeekRecord()
     }
 
+}
+
+@Composable
+fun TitleBar() {
+    Column(modifier = Modifier.fillMaxWidth()) {
+        Row(
+            modifier = Modifier
+                .padding(horizontal = 16.dp, vertical = 8.dp)
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = "健康饮食记录系统",
+                style = MaterialTheme.typography.titleLarge,
+                fontWeight = FontWeight.Bold,
+            )
+
+            // 可选：添加一个图标或其他操作按钮
+            /*
+            IconButton(onClick = { /* do something */ }) {
+                Icon(imageVector = Icons.Default.Settings, contentDescription = "Settings")
+            }
+             */
+        }
+
+        Divider(
+            modifier = Modifier.padding(horizontal = 16.dp),
+            color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f),
+            thickness = 1.dp
+        )
+    }
 }
 
 //搜索框

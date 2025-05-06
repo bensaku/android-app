@@ -68,7 +68,7 @@ fun FoodSelect(selectedFood: Food?, onClose: () -> Unit, viewModel: FoodViewMode
                     indication = null,
                 ) { }
         ) {
-            val sliderValue = remember { mutableStateOf(50f) }
+            val sliderValue = remember { mutableStateOf(100f) }
             Text(
                 text = "添加食物",
                 fontSize = 20.sp,
@@ -92,8 +92,8 @@ fun FoodSelect(selectedFood: Food?, onClose: () -> Unit, viewModel: FoodViewMode
             }
 
             Slider(
-                value = sliderValue.value, onValueChange = { newValue ->
-                    sliderValue.value = newValue
+                value = sliderValue.value/5, onValueChange = { newValue ->
+                    sliderValue.value = newValue*5
                 },
                 valueRange = 0f..100f,
                 steps = 10,

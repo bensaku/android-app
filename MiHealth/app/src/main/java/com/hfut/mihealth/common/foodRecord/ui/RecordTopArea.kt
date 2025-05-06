@@ -200,16 +200,15 @@ fun RecordTopArea(onOpen: () -> Unit, recordDate: Date, viewModel: FoodViewModel
 
         Spacer(modifier = Modifier.height(10.dp))
 
-        Row(
-            horizontalArrangement = Arrangement.SpaceEvenly,
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(60.dp)
-                .wrapContentHeight()
-        ) {
-            //todo 搜索
-            RecordSearchBar()
-        }
+//        Row(
+//            horizontalArrangement = Arrangement.SpaceEvenly,
+//            modifier = Modifier
+//                .fillMaxWidth()
+//                .height(60.dp)
+//                .wrapContentHeight()
+//        ) {
+//            //RecordSearchBar()
+//        }
         Spacer(modifier = Modifier.height(15.dp))
     }
 }

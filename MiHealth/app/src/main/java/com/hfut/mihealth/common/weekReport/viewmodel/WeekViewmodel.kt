@@ -80,7 +80,7 @@ class WeekViewmodel : ViewModel() {
     }
 
     @OptIn(ExperimentalTime::class)
-    suspend fun pollWeekReport(date: String, maxAttempts: Int = 15, delayBetweenAttempts: Long = 2000) {
+    suspend fun pollWeekReport(date: String, maxAttempts: Int = 15, delayBetweenAttempts: Long = 5000) {
         var attempt = 0
         while (attempt < maxAttempts) {
             attempt++
@@ -99,6 +99,7 @@ class WeekViewmodel : ViewModel() {
                 break
             } else {
                 println("Attempt $attempt failed with code: ${response.reportContent}")
+                _weekReport.postValue("周报还在生成中，请稍后再试")
             }
 
             if (attempt < maxAttempts) {

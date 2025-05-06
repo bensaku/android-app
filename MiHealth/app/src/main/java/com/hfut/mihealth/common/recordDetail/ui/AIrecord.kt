@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.hfut.mihealth.customCompose.GlideImage
 import com.hfut.mihealth.network.DTO.Image
+import com.hfut.mihealth.network.client.RetrofitClient
 import com.hfut.mihealth.ui.theme.Green
 
 @Composable
@@ -75,7 +76,7 @@ fun AIRecordItem(image: Image) {
     ) {
         // 左侧图片
         GlideImage(
-            url = "http://192.168.1.102:8000/images/" + image.timestamp + "_" + image.userId + ".jpg",
+            url = RetrofitClient.BASE_URL+ "images/" + image.timestamp + "_" + image.userId + ".jpg",
             modifier = Modifier
                 .size(45.dp)
                 .clip(RoundedCornerShape(5.dp))
@@ -93,7 +94,7 @@ fun AIRecordItem(image: Image) {
                 )
 
             }
-            Text(text = "约 ${image.amount} 克", color = Color.Gray)
+            Text(text = "约 ${image.amount} 克  "+ "${image.calories}千卡", color = Color.Gray)
         } else {
             Text(
                 text = "AI正在识别中",

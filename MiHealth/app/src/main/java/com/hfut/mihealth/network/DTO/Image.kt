@@ -8,6 +8,7 @@ data class Image(
     val timestamp: Long,
     val date: Date,
     val amount: Int?,
+    val calories: Int?,
     val foodName: String?,
     val completed: Boolean,
     )

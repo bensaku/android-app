@@ -127,7 +127,8 @@ public class WeekActivity extends ComponentActivity {
 
     @SuppressLint("SetTextI18n")
     private void initPieChartValue(double carbs, double fat, double protein) {
-        DecimalFormat df = new DecimalFormat("#.00"); // 创建一个格式化实例，保留两位小数
+        // 使用 "0.00" 格式确保即使整数部分为0也会显示
+        DecimalFormat df = new DecimalFormat("0.00");
 
         // 碳水
         View pieItem1 = findViewById(R.id.pie_item_1);
