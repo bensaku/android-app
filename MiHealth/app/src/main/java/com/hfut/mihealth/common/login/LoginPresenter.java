@@ -35,7 +35,7 @@ public class LoginPresenter {
     private final CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     public void loadPublicKey() {
-        Disposable disposable = RetrofitClient.INSTANCE.getInstance()
+        Disposable disposable = RetrofitClient.INSTANCE.getRetrofit()
                 .create(UserService.class)
                 .getPublicKey() // 返回 Observable<String>
                 .subscribeOn(Schedulers.io())         // 在IO线程发起网络请求
@@ -67,21 +67,22 @@ public class LoginPresenter {
         }
         registerRequest.setPassword(encryptedPassword);
 
-        Disposable register = RetrofitClient.INSTANCE.getInstance()
-                .create(UserService.class)
-                .register(registerRequest)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(result -> {
-                    // 处理结果
-                    if (Objects.equals(result.getSuccess(), "success")) {
-                        view.registerSuccess("注册成功");
-                    }
-                }, throwable -> {
-                    println("throwable");
-                    // 错误处理
-                    view.loginFail(throwable.getMessage());
-                });
+        Disposable register =
+                RetrofitClient.INSTANCE.getRetrofit()
+                        .create(UserService.class)
+                        .register(registerRequest)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(result -> {
+                            // 处理结果
+                            if (Objects.equals(result.getSuccess(), "success")) {
+                                view.registerSuccess("注册成功");
+                            }
+                        }, throwable -> {
+                            println("throwable");
+                            // 错误处理
+                            view.loginFail(throwable.getMessage());
+                        });
         compositeDisposable.add(register);
     }
 
@@ -95,12 +96,12 @@ public class LoginPresenter {
             throw new RuntimeException(e);
         }
         loginRequest.setPassword(encryptedPassword);
-        Disposable loginDisposable = RetrofitClient.INSTANCE.getInstance()
+        Disposable loginDisposable = RetrofitClient.INSTANCE.getRetrofit()
                 .create(UserService.class)
                 .login(loginRequest)
                 .subscribeOn(Schedulers.io())
-               .observeOn(AndroidSchedulers.mainThread())
-               .subscribe(result -> {
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(result -> {
                     // 处理结果
                     println(result.getSuccess());
                     if (Objects.equals(result.getSuccess(), "success")) {
@@ -111,7 +112,7 @@ public class LoginPresenter {
                 }, throwable -> {
                     println("throwable");
                     // 错误处理
-                   view.loginFail(throwable.getMessage());
+                    view.loginFail(throwable.getMessage());
                 });
         compositeDisposable.add(loginDisposable);
     }
@@ -119,7 +120,7 @@ public class LoginPresenter {
     /**
      * 使用给定的RSA公钥加密数据。
      *
-     * @param data 要加密的数据
+     * @param data         要加密的数据
      * @param publicKeyStr Base64编码的公钥字符串
      * @return 加密后的Base64编码字符串
      * @throws Exception 如果加密过程中出现错误

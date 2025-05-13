@@ -26,7 +26,7 @@ suspend fun uploadImage(picBitmap: ImageBitmap?) {
             val bodyPart = ImageUtil.createMultipartBodyPart(byteArray, "photo.jpg") // 使用工具类中的方法
 
 
-            val service = RetrofitClient.instance.create(UploadService::class.java)
+            val service = RetrofitClient.getRetrofit().create(UploadService::class.java)
             try {
                 service.uploadImage(bodyPart)
             } catch (e: Exception) {

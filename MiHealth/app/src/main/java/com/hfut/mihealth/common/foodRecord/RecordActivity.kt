@@ -143,7 +143,6 @@ fun RecordDetail(recordData: MutableList<FoodCount>, total: total, onClose: () -
                     indication = null,
                 ) { }
         ) {
-            //todo 统计删除功能
             if (recordData.isEmpty()) {
                 Text(
                     text = "尚未选择任何食物",

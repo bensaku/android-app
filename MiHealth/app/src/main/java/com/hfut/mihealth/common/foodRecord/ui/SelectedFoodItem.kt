@@ -19,26 +19,21 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.hfut.mihealth.R
 import com.hfut.mihealth.common.foodRecord.viewmodel.FoodCount
+import com.hfut.mihealth.common.foodRecord.viewmodel.FoodViewModel
 import com.hfut.mihealth.customCompose.GlideImage
 
 @Composable
-fun SelectedFoodItem(foodCount: FoodCount) {
+fun SelectedFoodItem(foodCount: FoodCount,viewModel: FoodViewModel= viewModel()) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .padding(16.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        // 左侧图片
-//        Image(
-//            painter = painterResource(R.drawable.ic_launcher_background),
-//            contentDescription = "Food Image",
-//            modifier = Modifier
-//                .size(35.dp)
-//                .clip(CircleShape)
-//        )
+
         GlideImage(
             url = foodCount.food.imageurl,
             modifier = Modifier
@@ -59,12 +54,14 @@ fun SelectedFoodItem(foodCount: FoodCount) {
         Text(text = "${foodCount.count} 克")
         // 右侧添加图标
         Icon(
-            painter = painterResource(R.drawable.change), // 请确保有相应的资源文件
+            painter = painterResource(R.drawable.close),
             contentDescription = "Add",
             tint = Color.Unspecified,
             modifier = Modifier
                 .padding(start = 5.dp)
-                .clickable { } // 点击事件处理
+                .clickable {
+                    viewModel.deleteFoodCount(foodCount)
+                } // 点击事件处理
                 .size(24.dp)
         )
     }

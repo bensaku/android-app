@@ -72,7 +72,7 @@ class RecordViewModel : ViewModel() {
     private fun refresh() {
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                val response = RetrofitClient.instance.create(RecordService::class.java)
+                val response = RetrofitClient.getRetrofit().create(RecordService::class.java)
                     .getDietRecord(date)
                 _recordData.value = response
                 countTotal()
@@ -101,6 +101,9 @@ class RecordViewModel : ViewModel() {
             totalFats = records.sumOf { it.fat },
             totalProteins = records.sumOf { it.protein }
         )
+        _recordData.value.image?.forEach { it ->
+            it.calories?.let { newTotal.totalCalories+= it }
+        }
         _total.value = newTotal
     }
 }

@@ -50,7 +50,7 @@ class WeekViewmodel : ViewModel() {
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 val response =
-                    RetrofitClient.instance.create(RecordService::class.java).getWeekRecord(date)
+                    RetrofitClient.getRetrofit().create(RecordService::class.java).getWeekRecord(date)
                 withContext(Dispatchers.Main) {
                     updateWeekDate(response)
                 }
@@ -62,7 +62,7 @@ class WeekViewmodel : ViewModel() {
 
     private fun getWeekDataRx(){
         viewModelScope.launch {
-            RetrofitClient.instance.create(RecordService::class.java).getWeekRecord_Rx(date)
+            RetrofitClient.getRetrofit().create(RecordService::class.java).getWeekRecord_Rx(date)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ response ->
@@ -85,7 +85,7 @@ class WeekViewmodel : ViewModel() {
         while (attempt < maxAttempts) {
             attempt++
             val response = try {
-                RetrofitClient.instance.create(RecordService::class.java).getWeekReport(date)
+                RetrofitClient.getRetrofit().create(RecordService::class.java).getWeekReport(date)
             } catch (e: Exception) {
                 println("Attempt $attempt failed with exception: ${e.message}")
                 delay(delayBetweenAttempts)

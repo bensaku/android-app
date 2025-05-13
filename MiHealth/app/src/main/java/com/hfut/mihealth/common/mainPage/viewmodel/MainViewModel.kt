@@ -35,7 +35,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun guestLogin() {
-        val userService = RetrofitClient.instance.create(UserService::class.java)
+        val userService = RetrofitClient.getRetrofit().create(UserService::class.java)
         val sharedPreferences = SharedPreferencesHelper(getApplication())
         viewModelScope.launch {
             userService.guestLogin()

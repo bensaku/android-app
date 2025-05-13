@@ -58,7 +58,7 @@ class FoodViewModel : ViewModel() {
     }
 
     private fun loadFoodData() {
-        val foodService = RetrofitClient.instance.create(FoodService::class.java)
+        val foodService = RetrofitClient.getRetrofit().create(FoodService::class.java)
 
         viewModelScope.launch {
             foodService.getFood()
@@ -78,6 +78,16 @@ class FoodViewModel : ViewModel() {
         val updatedList = _foodCounts.value.orEmpty().toMutableList()
         updatedList.add(FoodCount(food, count))
         _foodCounts.value = updatedList
+    }
+
+    fun deleteFoodCount(foodCount: FoodCount){
+        val updatedList = _foodCounts.value.orEmpty().toMutableList()
+        // 使用 removeIf 方法根据条件移除元素
+        updatedList.removeIf { it.food == foodCount.food}
+        // 或者，如果 FoodCount 类正确实现了 equals 和 hashCode 方法，可以直接使用：
+        // updatedList.remove(foodCount)
+        _foodCounts.value = updatedList
+        countTotal()
     }
 
 
@@ -128,7 +138,7 @@ class FoodViewModel : ViewModel() {
 
     fun submitRecord() {
         val recordService =
-            RetrofitClient.instance.create(com.hfut.mihealth.network.RecordService::class.java)
+            RetrofitClient.getRetrofit().create(com.hfut.mihealth.network.RecordService::class.java)
         viewModelScope.launch {
             recordService.addRecord(createRecord(date.value, meals.value, foodCounts.value))
                 .subscribeOn(Schedulers.io())
